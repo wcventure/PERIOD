@@ -1,0 +1,9 @@
+src/nspr-4.8.6
+src/*.tar.gz
+*.o.bc
+*.o
+.cvar.o
+.cvar.o.bc
+bin/
+out_*
+*.DS_Store

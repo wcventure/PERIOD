@@ -1,0 +1,14 @@
+lazy01_ok
+lazy01_bad
+*.bc
+ConConfig.*
+callgraph_final.dot
+callgraph_initial.dot
+dbds.*
+func_trace.log
+mempair.*
+mempair_all.*
+mempairso.*
+mssa.*
+so.*
+out_*

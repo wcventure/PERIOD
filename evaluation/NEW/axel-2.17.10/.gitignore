@@ -1,0 +1,15 @@
+test.tar.bz2
+*.bc
+ConConfig.*
+callgraph_final.dot
+callgraph_initial.dot
+dbds.*
+func_trace.log
+mempair.*
+mempair_all.*
+mempairso.*
+mssa.*
+so.*
+out_*
+axel-2.17.10
+axel-2.17.10.tar.gz

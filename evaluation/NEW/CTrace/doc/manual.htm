@@ -1,0 +1,2298 @@
+<html>
+<head>
+</head>
+<body bottommargin="0" bgcolor="#e4e4e4" leftmargin="50"  rightmargin="50">
+    <h1>CTrace Manual</h1>
+    <ul class="tocList">
+        <li><a class="tocLink" href="#SEC_1" name="TOC_1">1 Overview</a> 
+            <ul class="tocList">
+                <li><a class="tocLink" href="#SEC_1_1" name="TOC_1_1">1.1 CTrace Manual Version</a></li>
+                <li><a class="tocLink" href="#SEC_1_2" name="TOC_1_2">1.2 What is CTrace?</a></li>
+                <li><a class="tocLink" href="#SEC_1_3" name="TOC_1_3">1.3 CTrace Features</a></li>
+            </ul>
+        </li>
+    </ul>
+    <ul class="tocList">
+        <li><a class="tocLink" href="#SEC_2" name="TOC1">2 Reference</a> 
+            <ul class="tocList">
+                <li><a class="tocLink" href="#SEC_2_1" name="TOC_2_1">2.1 Trace Library Initialisation And Cleanup</a></li>
+			<ul class="tocList">
+				<li><a class="tocLink" href="#SEC_2_1_1" name="TOC_2_1_1">2.1.1 TRC_INIT_DEFAULT</a></li>
+				<li><a class="tocLink" href="#SEC_2_1_2" name="TOC_2_1_2">2.1.2 TRC_INIT</a></li>
+				<li><a class="tocLink" href="#SEC_2_1_3" name="TOC_2_1_3">2.1.3 TRC_END</a></li>
+			</ul>
+                <li><a class="tocLink" href="#SEC_2_2" name="TOC_2_2">2.2 Trace Calls</a></li>
+			<ul class="tocList">
+				<li><a class="tocLink" href="#SEC_2_2_1" name="TOC_2_2_1">2.2.1 TRC_ENTER</a></li>
+				<li><a class="tocLink" href="#SEC_2_2_2" name="TOC_2_2_1">2.2.2 TRC_RETURN</a></li>
+				<li><a class="tocLink" href="#SEC_2_2_3" name="TOC_2_2_1">2.2.3 TRC_VOID_RETURN</a></li>
+				<li><a class="tocLink" href="#SEC_2_2_4" name="TOC_2_2_1">2.2.4 TRC_PRINT</a></li>
+				<li><a class="tocLink" href="#SEC_2_2_5" name="TOC_2_2_1">2.2.5 TRC_ERROR</a></li>
+			</ul>
+                <li><a class="tocLink" href="#SEC_2_3" name="TOC_2_3">2.3 Turn Tracing On/Off</a></li>
+			<ul class="tocList">
+				<li><a class="tocLink" href="#SEC_2_3_1" name="TOC_2_3_1">2.3.1 TRC_ENABLE</a></li>
+				<li><a class="tocLink" href="#SEC_2_3_2" name="TOC_2_3_2">2.3.2 TRC_DISABLE</a></li>
+				<li><a class="tocLink" href="#SEC_2_3_3" name="TOC_2_3_3">2.3.3 TRC_TURN_ON</a></li>
+				<li><a class="tocLink" href="#SEC_2_3_4" name="TOC_2_3_4">2.3.4 TRC_TURN_OFF</a></li>
+			</ul>
+                <li><a class="tocLink" href="#SEC_2_4" name="TOC_2_4">2.4 The Trace Output Stream</a></li>
+			<ul class="tocList">
+				<li><a class="tocLink" href="#SEC_2_4_1" name="TOC_2_4_1">2.4.1 TRC_FILE</a></li>
+			</ul>
+                <li><a class="tocLink" href="#SEC_2_5" name="TOC_2_5">2.5 Working With Trace Threads</a></li>
+			<ul class="tocList">
+				<li><a class="tocLink" href="#SEC_2_5_1" name="TOC_2_5_1">2.5.1 TRC_ADD_THREAD</a></li>
+				<li><a class="tocLink" href="#SEC_2_5_2" name="TOC_2_5_2">2.5.2 TRC_REMOVE_THREAD</a></li>
+				<li><a class="tocLink" href="#SEC_2_5_3" name="TOC_2_5_3">2.5.3 TRC_TURN_THREAD_ON</a></li>
+				<li><a class="tocLink" href="#SEC_2_5_4" name="TOC_2_5_4">2.5.4 TRC_TURN_THREAD_OFF</a></li>
+			</ul>
+                <li><a class="tocLink" href="#SEC_2_6" name="TOC_2_6">2.6 Working With Trace Levels</a></li>
+			<ul class="tocList">
+				<li><a class="tocLink" href="#SEC_2_6_1" name="TOC_2_6_1">2.6.1 TRC_SET_LEVEL</a></li>
+				<li><a class="tocLink" href="#SEC_2_6_2" name="TOC_2_6_2">2.6.2 TRC_ADD_LEVEL</a></li>
+				<li><a class="tocLink" href="#SEC_2_6_3" name="TOC_2_6_3">2.6.3 TRC_REMOVE_LEVEL</a></li>
+				<li><a class="tocLink" href="#SEC_2_6_4" name="TOC_2_6_4">2.6.4 TRC_SET_THREAD_LEVEL</a></li>
+				<li><a class="tocLink" href="#SEC_2_6_5" name="TOC_2_6_5">2.6.5 TRC_ADD_THREAD_LEVEL</a></li>
+				<li><a class="tocLink" href="#SEC_2_6_6" name="TOC_2_6_6">2.6.6 TRC_REMOVE_THREAD_LEVEL</a></li>
+			</ul>
+                <li><a class="tocLink" href="#SEC_2_7" name="TOC3">2.7 Performing a Local Trace</a></li>
+			<ul class="tocList">
+				<li><a class="tocLink" href="#SEC_2_7_1" name="TOC_2_7_1">2.7.1 TRC_TURN_LOCAL_ON</a></li>
+				<li><a class="tocLink" href="#SEC_2_7_2" name="TOC_2_7_1">2.7.2 TRC_TURN_LOCAL_OFF</a></li>
+				<li><a class="tocLink" href="#SEC_2_7_3" name="TOC_2_7_1">2.7.3 TRC_SET_LOCAL_LEVEL</a></li>
+				<li><a class="tocLink" href="#SEC_2_7_4" name="TOC_2_7_1">2.7.4 TRC_ADD_LOCAL_LEVEL</a></li>
+				<li><a class="tocLink" href="#SEC_2_7_5" name="TOC_2_7_1">2.7.5 TRC_REMOVE_LOCAL_LEVEL</a></li>
+			</ul>
+            </ul>
+        </li>
+    </ul> 
+
+<table align=center width=100% valign=top border=0 cellpadding=20 cellspacing=0>
+<!--------------------------------------------------------------------------------------
+	1. Overview
+--------------------------------------------------------------------------------------->
+	<tr>
+		<td class=contentCellTd height=30 align=left valign=top>
+		<a name="SEC_1"></a>
+		<h2 valign=middle>1 Overview</h2>
+		</td>
+	</tr>
+
+<!--------------------------------------------------------------------------------------
+	1.1 CTrace Manual Version
+--------------------------------------------------------------------------------------->
+	<tr>
+		<td class=contentCellTd height=30 align=left valign=top>
+		<a name="SEC_1_1"></a>
+		<h3 valign=middle>1.1 CTrace Manual Version</h3>
+		</td>
+	</tr>
+	<tr>
+		<td class=contentCellTd align=left valign=top>
+		<p>
+		<strong>Version: </strong>1.0
+		</p>
+		<p>
+		<strong>Author: </strong>Cal McPherson
+		</p>
+		<p>
+		<strong>Comments: </strong>Initial revision of the document.
+		</p>
+		</td>
+	</tr>
+
+<!--------------------------------------------------------------------------------------
+	1.2 What is CTrace?
+--------------------------------------------------------------------------------------->
+	<tr>
+		<td class=contentCellTd height=30 align=left valign=top>
+		<a name="SEC_1_2"></a>
+		<h3 valign=middle>1.2 What is CTrace?</h3>
+		</td>
+	</tr>
+	<tr>
+		<td class=contentCellTd align=left valign=top>
+		<p>
+		CTrace is a fast, lightweight trace/debug C library.
+		It was specifically written for use in a multi-threaded,
+		embedded application, though it will work just fine 
+		in a single threaded C application.
+		A trace/debug library has an interface of macros or functions 
+		which outputs the contents of program variables as the application
+		is running.  The trace calls may be made at certain depths(either
+		defined manually or at runtime, or simply using function calls to
+		determine the level of depth).  It may also be required to have
+		trace functions only called on a particular thread or logical unit
+		of the application.
+		</p>
+		<p>
+		Ok, so you may ask isn't that what debuggers are for?  Well, yes,
+		though debuggers can be kind of tricky to use when an application
+		is running across multiple threads.  Also, once an application is
+		deployed, for example on an embedded system, using debuggers becomes
+		impractical.  In this case, a remote protocol could turn tracing on
+		for parts of the application, and the results may be returned either
+		as a stream, or output to a file on the remote system, and collected
+		via ftp.
+		</p>
+		</td>
+	</tr>
+
+
+<!--------------------------------------------------------------------------------------
+	1.3 CTrace Features
+--------------------------------------------------------------------------------------->
+	<tr>
+		<td class=contentCellTd height=30 align=left valign=top>
+		<a name="SEC_1_3"></a>
+		<h3 valign=middle>1.3 CTrace Features</h3>
+		</td>
+	</tr>
+	<tr>
+		<td class=contentCellTd align=left valign=top>
+		<p>
+		<ul>
+		<li>Fast, ligthweight tracing</li>
+		<li>Support for turning tracing on and off as required</li>
+		<li>Support for turning trace levels on and off independantly</li>
+		<li>Support for adding and removing trace threads</li>
+		<li>Ability to turn individual thread traces on and off in isolation</li>
+		<li>Ability to trace logical software units in isolation</li>
+		</ul>
+		</p>
+		<p>
+		CTrace is distributed under the GNU General Public License and is free
+		for use 
+		</p>
+		</td>
+	</tr>
+
+<!--------------------------------------------------------------------------------------
+	2.  Reference
+--------------------------------------------------------------------------------------->
+	<tr>
+		<td class=contentCellTd height=30 align=left valign=top>
+		<a name="SEC_2"></a>
+		<h2 valign=middle>2 Reference</h2>
+		</td>
+	</tr>
+<!--------------------------------------------------------------------------------------
+	2.1 Trace Library Initialisation and Cleanup	
+--------------------------------------------------------------------------------------->
+	<tr>
+		<td class=contentCellTd height=30 align=left valign=top>
+		<a name="SEC_2_1"></a>
+		<h3 valign=middle>2.1 Trace Library Initialisation and Cleanup</h3>
+		</td>
+	</tr>
+	<tr>
+		<td class=contentCellTd align=left valign=top>
+		<p>
+		Before the trace library is used, it must first be initialised
+		by calling either the TRC_INIT_DEFAULT or the TRC_INIT macro.  
+		Initialisation should normally take place upon startup of the 
+		application, for example after entry of the program's main() function.
+		</p>
+		<p>
+		<p>
+		Note there is a difference between enabling and disabling tracing
+		and turning tracing on and off.
+		<p>
+		The trace library is made up of
+		macros which call functions in the trace library.  In a real-time
+		(or any system) we do not want these functions being called if 
+		we are not currently tracing anything.
+		Disabling the trace libraries prevents the underlying
+		calls to the trace library.  It is recommended to initialise the
+		trace library with the TRC_DISABLED flag for normal(non-traced)
+		running of your application.
+		</p>
+		<p>
+		Because the trace library allows multiple threads and for threads
+		to be traced in isolation, it is neccessary to have an additional
+		flag for turning tracing on and off at the thread level.  For this 
+		reason, if you are using the trace library in a single-threaded
+		application, you need to both enable tracing with the TRC_ENABLED
+		flag, and turn tracing on with the TRC_ON flag for tracing to occur.
+		</p>	
+		<p>
+		Finally, immediately prior to exiting your program you should call
+		TRC_END() to cleanup data structures and close threads associated
+		with the trace library.
+		<p>
+		</td>
+	</tr>
+<!--------------------------------------------------------------------------------------
+	2.1.1 TRC_INIT_DEFAULT()	
+--------------------------------------------------------------------------------------->
+	<tr>
+		<td class=contentCellTd height=30 align=left valign=top>
+		<a name="SEC_2_1_1"></a>
+		<h4 valign=middle>2.1.1 TRC_INIT_DEFAULT()</h4>
+		</td>
+	</tr>
+	<tr>
+		<td class=contentCellTd>
+		<p>
+		<strong>Arguments: </strong> void
+		</p>
+		<p>
+		<strong>Return Value:</strong>
+		</p>
+		<p>
+		<table border=1>
+			<tr>
+				<td>Type</td>
+				<td>Description</td>
+			</tr>
+			<tr valign=top>
+				<td>int</td>
+				<td>	
+					<table border=1>
+						<tr>
+							<td>0</td>
+							<td>success</td>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>failure</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+		</p>
+		<p>
+		<strong>Description:</strong>
+		</p>
+		<p>
+		Initialise the trace library for use with default settings.
+		</p>
+		<p>
+		<strong>Example:</strong>
+		</p>
+		<p>
+		TRC_INIT_DEFAULT();
+		</p>
+		<p>
+		Initialise trace library with the following values:
+		<ul>
+			<li>_STDOUT - send output to standard output stream</li>
+			<li>TRC_DISABLED - disable tracing</li>
+			<li>TRC_ON - turn tracing on for all threads</li>
+			<li>TRC_ERR - turn on error tracing only for all trace levels</li>
+			<li>TRC_SERV_OFF - run tracing inside the thread being traced</li>
+		</ul>
+		</p>
+		<hr>
+		<p>
+		</td>
+	</tr>
+<!--------------------------------------------------------------------------------------
+	2.1.2 TRC_INIT()	
+--------------------------------------------------------------------------------------->
+	<tr>
+		<td class=contentCellTd height=30 align=left valign=top>
+		<a name="SEC_2_1_2"></a>
+		<h4 valign=middle>2.1.2 TRC_INIT(a,b,c,d,e)</h4>
+		</td>
+	</tr>
+	<tr>
+		<td class=contentCellTd>
+		<strong>Arguments:</strong>
+		<p>
+		<table border=1>
+			<tr valign=top>
+				<td>Name</td>
+				<td>Type</td>
+				<td>Description</td>
+			</tr>
+			<tr valign=top>
+				<td>a</td>
+				<td>const char *</td>
+				<td>Default output stream for tracing:
+				<p>
+				<table border=1>
+					<tr>
+						<td>NULL</td>
+						<td>standard output</td>
+					</tr>
+					<tr>
+						<td>"stdout"</td>
+						<td>standard output</td>
+					</tr>
+					<tr>
+						<td>"stderr"</td>
+						<td>standard error</td>
+					</tr>
+					<tr>
+					<td>"filename"</td>
+					<td>output to "filename"</td>
+					</tr>
+				</table>
+				</p>
+				</td>
+			</tr>
+			<tr valign=top>
+				<td>b</td>
+				<td>t_enable_t</td>
+				<td>Trace enabled flag</td>
+			</tr>
+			<tr valign=top>
+				<td>c</td>
+				<td>t_on_t</td>
+				<td>Trace on/off flag</td>
+			</tr>
+			<tr valign=top>
+				<td>d</td>
+				<td>t_level_t</td>
+				<td>Trace levels to default to</td>
+			</tr>
+			<tr valign=top>
+				<td>e</td>
+				<td>t_server_t</td>
+				<td>Run trace as separate server thread</td>
+			</tr>
+		</table>
+		<p>
+		<strong>Return Value:</strong>
+		</p>
+		<p>
+		<table border=1>
+			<tr>
+				<td>Type</td>
+				<td>Description</td>
+			</tr>
+			<tr valign=top>
+				<td>int</td>
+				<td>	
+				<table border=1>
+					<tr>
+						<td>0</td>
+						<td>success</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>failure</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+		</table>
+		</p>
+		<p>
+		<strong>Description:</strong>
+		</p>
+		<p>
+		Initialise the trace library for use.
+		</p>
+		<p>
+		<strong>Example:</strong>
+		</p>
+		<p>
+		TRC_INIT(NULL, TRC_ENABLED, TRC_ON, TRC_ALL, TRC_SERV_OFF);
+		</p>
+		<p>
+		Initialise trace library with the following values:
+		<ul>
+			<li>NULL - send output to standard output stream</li>
+			<li>TRC_ENABLED - enable tracing</li>
+			<li>TRC_ON - turn tracing on for all threads</li>
+			<li>TRC_ALL - turn tracing on for all trace levels</li>
+			<li>TRC_SERV_OFF - run tracing inside the thread being traced</li>
+			</ul>
+		</p>
+		<hr>
+		</td>
+	</tr>
+
+
+<!--------------------------------------------------------------------------------------
+	2.1.3 TRC_END()	
+--------------------------------------------------------------------------------------->
+	<tr>
+		<td class=contentCellTd height=30 align=left valign=top>
+		<a name="SEC_2_1_3"></a>
+		<h4 valign=middle>2.1.1 TRC_END()</h4>
+		</td>
+	</tr>
+	<tr>
+		<td class=contentCellTd>
+		<p>
+		<strong>Arguments: </strong> void
+		</p>
+		<p>
+		<strong>Return Value: </strong> void
+		</p>
+		<p>
+		<strong>Description:</strong>
+		</p>
+		<p>
+		Cleanup trace library data structures and threads.
+		</p>
+		<p>
+		<strong>Example:</strong>
+		</p>
+		<p>
+		TRC_END();
+		</p>
+		</td>
+	</tr>
+
+<!--------------------------------------------------------------------------------------
+	2.2 Trace Calls	
+--------------------------------------------------------------------------------------->
+	<tr>
+		<td class=contentCellTd height=30 align=left valign=top>
+		<a name="SEC_2_2"></a>
+		<h3 valign=middle>2.2 Trace Calls</h3>
+		</td>
+	</tr>
+	<tr>
+		<td class=contentCellTd align=left valign=top>
+		<p>
+		The trace calls are the meat and potatoes of the CTrace library.
+		They send the tracing information to the output stream.
+		</p>
+		<p>
+		TRC_ENTER() displays the procedure or function name and the 
+		values of the arguments passed into it as parameters.  It 
+		should be called immediately upon entering a procedure or function.
+		</p>
+		<p>
+		TRC_RETURN() displays the function return value and then
+		performs function return.  TRC_VOID_RETURN() displays and performs
+		procedure return.
+		</p>
+		<p>
+		TRC_TRACE() is used to display any general trace information, in 
+		the format of keyword/value pairs.
+		</p>
+		<p>
+		Finally, TRC_ERROR displays error information, once again in the
+		format of keyword/value pairs.  TRC_ERROR calls will occur when
+		the TRC_ERR tlevel_t flag is set.
+		</p>
+		</td>
+	</tr>
+
+<!--------------------------------------------------------------------------------------
+	2.2.1 TRC_ENTER(a,b,c)	
+--------------------------------------------------------------------------------------->
+	<tr>
+		<td class=contentCellTd height=30 align=left valign=top>
+		<a name="SEC_2_2_1"></a>
+		<h4 valign=middle>2.2.1 TRC_ENTER(a,b,c)</h4>
+		</td>
+	</tr>
+	<tr>
+		<td class=contentCellTd>
+		<strong>Arguments:</strong>
+		<p>
+		<table border=1>
+			<tr valign=top>
+				<td>Name</td>
+				<td>Type</td>
+				<td>Description</td>
+			</tr>
+			<tr valign=top>
+				<td>a</td>
+				<td>t_local_t</td>
+				<td>local trace flag</td>
+			</tr>
+			<tr valign=top>
+				<td>b</td>
+				<td>t_level_t</td>
+				<td>trace level</td>
+			</tr>
+			<tr valign=top>
+				<td>c</td>
+				<td>char *</td>
+				<td>Formatted vararglist of fn argument values</td>
+			</tr>
+		</table>
+		<p>
+		<strong>Return Value:</strong> void
+		</p>
+		<p>
+		<strong>Description:</strong>
+		</p>
+		<p>
+		Write trace enter function/procedure line to output stream.
+		Argument &lt;c&gt; takes the form ("%d, %s", 1, "string") as 
+		per the vararglist format of fprintf and printf C functions.
+		</p>
+		<p>
+		<strong>Example:</strong>
+		</p>
+		<p>
+		void myfunction(int myfn_arg1, char *myfn_arg2){<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;TRC_ENTER(tlocal, TRC0, (%d, %s", myfn_arg1, myfn_arg2));<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;...	
+		</p>
+		<p>
+		Show that "myfunction" has been entered with argument values "myfn_arg1", "myfn_arg2".
+		</p>
+		<hr>
+		</td>
+	</tr>
+
+<!--------------------------------------------------------------------------------------
+	2.2.2 TRC_RETURN(a,b,c,d)	
+--------------------------------------------------------------------------------------->
+	<tr>
+		<td class=contentCellTd height=30 align=left valign=top>
+		<a name="SEC_2_2_2"></a>
+		<h4 valign=middle>2.2.2 TRC_RETURN(a,b,c,d)</h4>
+		</td>
+	</tr>
+	<tr>
+		<td class=contentCellTd>
+		<strong>Arguments:</strong>
+		<p>
+		<table border=1>
+			<tr valign=top>
+				<td>Name</td>
+				<td>Type</td>
+				<td>Description</td>
+			</tr>
+			<tr valign=top>
+				<td>a</td>
+				<td>t_local_t</td>
+				<td>local trace flag</td>
+			</tr>
+			<tr valign=top>
+				<td>b</td>
+				<td>t_level_t</td>
+				<td>trace level</td>
+			</tr>
+			<tr valign=top>
+				<td>c</td>
+				<td>char *</td>
+				<td>Formatted vararglist showing return value</td>
+			</tr>
+			<tr valign=top>
+				<td>d</td>
+				<td>void</td>
+				<td>Return value</td>
+			</tr>
+		</table>
+		<p>
+		<strong>Return Value:</strong> void
+		</p>
+		<p>
+		<strong>Description:</strong>
+		</p>
+		<p>
+		Write trace return from function line to output stream.
+		Argument &lt;c&gt; takes the form ("%d, %s", 1) as 
+		per the vararglist format of fprintf and printf C functions.
+		Note this function performs function return.  The function
+		return value is passed as argument &lt;d&gt; to the macro.
+		</p>
+		<p>
+		<strong>Example:</strong>
+		</p>
+		<p>
+		&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;TRC_RETURN(tlocal, TRC0, (%d", retval), retval);<br>
+		}
+		</p>
+		<p>
+		Show that function return has taken place returning value "retval".  Also
+		performs function return.
+		</p>
+		<hr>
+		</td>
+	</tr>
+
+<!--------------------------------------------------------------------------------------
+	2.2.3 TRC_VOID_RETURN(a,b)	
+--------------------------------------------------------------------------------------->
+	<tr>
+		<td class=contentCellTd height=30 align=left valign=top>
+		<a name="SEC_2_2_3"></a>
+		<h4 valign=middle>2.2.3 TRC_VOID_RETURN(a,b)</h4>
+		</td>
+	</tr>
+	<tr>
+		<td class=contentCellTd>
+		<strong>Arguments:</strong>
+		<p>
+		<table border=1>
+			<tr valign=top>
+				<td>Name</td>
+				<td>Type</td>
+				<td>Description</td>
+			</tr>
+			<tr valign=top>
+				<td>a</td>
+				<td>t_local_t</td>
+				<td>local trace flag</td>
+			</tr>
+			<tr valign=top>
+				<td>b</td>
+				<td>t_level_t</td>
+				<td>trace level</td>
+			</tr>
+		</table>
+		<p>
+		<strong>Return Value:</strong> void
+		</p>
+		<p>
+		<strong>Description:</strong>
+		</p>
+		<p>
+		Write trace return from procedure line to output stream.
+		Note this macro performs procedure return.  
+		</p>
+		<p>
+		<strong>Example:</strong>
+		</p>
+		<p>
+		&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;TRC_VOID_RETURN(tlocal, TRC0);<br>
+		}
+		</p>
+		<p>
+		Show that procedure return has taken place.  Also
+		performs procedure return.
+		</p>
+		<hr>
+		</td>
+	</tr>
+
+<!--------------------------------------------------------------------------------------
+	2.2.4 TRC_PRINT(a,b,c,d)	
+--------------------------------------------------------------------------------------->
+	<tr>
+		<td class=contentCellTd height=30 align=left valign=top>
+		<a name="SEC_2_2_4"></a>
+		<h4 valign=middle>2.2.4 TRC_PRINT(a,b,c,d)</h4>
+		</td>
+	</tr>
+	<tr>
+		<td class=contentCellTd>
+		<strong>Arguments:</strong>
+		<p>
+		<table border=1>
+			<tr valign=top>
+				<td>Name</td>
+				<td>Type</td>
+				<td>Description</td>
+			</tr>
+			<tr valign=top>
+				<td>a</td>
+				<td>t_local_t</td>
+				<td>local trace flag</td>
+			</tr>
+			<tr valign=top>
+				<td>b</td>
+				<td>t_level_t</td>
+				<td>trace level</td>
+			</tr>
+			<tr valign=top>
+				<td>c</td>
+				<td>char *</td>
+				<td>keyword</td>
+			</tr>
+			<tr valign=top>
+				<td>d</td>
+				<td>char *</td>
+				<td>Formatted vararglist of fn argument values</td>
+			</tr>
+		</table>
+		<p>
+		<strong>Return Value:</strong> void
+		</p>
+		<p>
+		<strong>Description:</strong>
+		</p>
+		<p>
+		Write trace print line to output stream.
+		Argument &lt;c&gt; is a keyword describing the trace information.
+		Argument &lt;d&gt; takes the form ("%d, %s", 1, "string") as 
+		per the vararglist format of fprintf and printf C functions.
+		</p>
+		<p>
+		<strong>Example:</strong>
+		</p>
+		<p>
+		TRC_PRINT(tlocal, TRC0, "innerloopval", ("i=%d", 0));	
+		</p>
+		<hr>
+		</td>
+	</tr>
+
+<!--------------------------------------------------------------------------------------
+	2.2.5 TRC_ERROR(a,b,c)	
+--------------------------------------------------------------------------------------->
+	<tr>
+		<td class=contentCellTd height=30 align=left valign=top>
+		<a name="SEC_2_2_5"></a>
+		<h4 valign=middle>2.2.5 TRC_ERROR(a,b)</h4>
+		</td>
+	</tr>
+	<tr>
+		<td class=contentCellTd>
+		<strong>Arguments:</strong>
+		<p>
+		<table border=1>
+			<tr valign=top>
+				<td>Name</td>
+				<td>Type</td>
+				<td>Description</td>
+			</tr>
+			<tr valign=top>
+				<td>a</td>
+				<td>t_local_t</td>
+				<td>local trace flag</td>
+			</tr>
+			<tr valign=top>
+				<td>b</td>
+				<td>char *</td>
+				<td>keyword</td>
+			</tr>
+			<tr valign=top>
+				<td>c</td>
+				<td>char *</td>
+				<td>Formatted vararglist of fn argument values</td>
+			</tr>
+		</table>
+		<p>
+		<strong>Return Value:</strong> void
+		</p>
+		<p>
+		<strong>Description:</strong>
+		</p>
+		<p>
+		Write trace print line to output stream.
+		Argument &lt;b&gt; is a keyword describing the trace information.
+		Argument &lt;c&gt; takes the form ("%d, %s", 1, "string") as 
+		per the vararglist format of fprintf and printf C functions.
+		Trace level flag TRC_ERR needs to be set for TRC_ERROR output
+		lines to be send to the output stream. 
+		</p>
+		<p>
+		<strong>Example:</strong>
+		</p>
+		<p>
+		TRC_ERROR(tlocal,  "rooted", ("s=%s", "your rooted"));
+		</p>
+		<hr>
+		</td>
+	</tr>
+
+<!--------------------------------------------------------------------------------------
+	2.3 Turn tracing on/off	
+--------------------------------------------------------------------------------------->
+	<tr>
+		<td class=contentCellTd height=30 align=left valign=top>
+		<a name="SEC_2_3"></a>
+		<h3 valign=middle>2.3 Turn Tracing On/Off</h3>
+		</td>
+	</tr>
+	<tr>
+		<td class=contentCellTd align=left valign=top>
+		<p>
+		TRC_ENABLE() and TRC_DISABLE() are used to disable and enable
+		tracing.  Upon entry to every trace macro a flag is checked to
+		determine if tracing is enabled.  If tracing is enabled, the
+		underlying trace function and procedure calls are made.  Tracing
+		may or may not occur dependant upon other trace flags, but 
+		this is expensive and undesirable if tracing is not being used.
+		Keep tracing disabled by default.
+		</p>
+		<p>
+		The trace library allows turning tracing on and off at the
+		thread level.  Each thread can be turned on and off in isolation.
+		In addition, the macros TRC_TURN_ON() and TRC_TURN_OF() provide
+		blanket calls to turn tracing on and off for all trace threads.
+		Somehow, a trace thread needs to have tracing turned on in order
+		for trace output calls to send trace information to the output
+		stream.  
+		</p>
+		</td>
+	</tr>
+
+<!--------------------------------------------------------------------------------------
+	2.3.1 TRC_ENABLE()	
+--------------------------------------------------------------------------------------->
+	<tr>
+		<td class=contentCellTd height=30 align=left valign=top>
+		<a name="SEC_2_3_1"></a>
+		<h4 valign=middle>2.3.1 TRC_ENABLE()</h4>
+		</td>
+	</tr>
+	<tr>
+		<td class=contentCellTd>
+		<p>
+		<strong>Arguments: </strong> void
+		</p>
+		<p>
+		<strong>Return Value: </strong> void
+		</p>
+		<p>
+		<strong>Description:</strong>
+		</p>
+		<p>
+		Enable tracing calls.  Causes trace output macro calls(
+		TRC_ENTER, TRC_RETURN, TRC_VOID_RETURN, TRC_PRINT, TRC_ERROR)
+		to call their underlying library functions. 
+		Tracing must also be turned on for the traced
+		thread with TRC_TURN_ON(all threads) or TRC_TURN_THREAD_ON macro for
+		tracing to occur.
+		</p>
+		<p>
+		<strong>Example:</strong>
+		</p>
+		<p>
+		TRC_ENABLE();
+		</p>
+		<hr>
+		</td>
+	</tr>
+
+<!--------------------------------------------------------------------------------------
+	2.3.2 TRC_DISABLE()	
+--------------------------------------------------------------------------------------->
+	<tr>
+		<td class=contentCellTd height=30 align=left valign=top>
+		<a name="SEC_2_3_2"></a>
+		<h4 valign=middle>2.3.2 TRC_DISABLE()</h4>
+		</td>
+	</tr>
+	<tr>
+		<td class=contentCellTd>
+		<p>
+		<strong>Arguments: </strong> void
+		</p>
+		<p>
+		<strong>Return Value: </strong> void
+		</p>
+		<p>
+		<strong>Description:</strong>
+		</p>
+		<p>
+		Disable tracing calls.  Stops trace output macro calls(
+		TRC_ENTER, TRC_RETURN, TRC_VOID_RETURN, TRC_PRINT, TRC_ERROR)
+		calling their underlying library functions. If a real-time
+		system(or any system) is not being traced, we do not want
+		redundant function calls taking up processor time.  For this
+		reason, you should set TRC_DISABLED flag as default in the TRC_INIT()
+		macro for normal(non-traced) program execution.
+		</p>
+		<p>
+		<strong>Example:</strong>
+		</p>
+		<p>
+		TRC_DISABLE();
+		</p>
+		<hr>
+		</td>
+	</tr>
+
+
+<!--------------------------------------------------------------------------------------
+	2.3.3 TRC_TURN_ON()	
+--------------------------------------------------------------------------------------->
+	<tr>
+		<td class=contentCellTd height=30 align=left valign=top>
+		<a name="SEC_2_3_3"></a>
+		<h4 valign=middle>2.3.3 TRC_TURN_ON()</h4>
+		</td>
+	</tr>
+	<tr>
+		<td class=contentCellTd>
+		<p>
+		<strong>Arguments: </strong> void
+		</p>
+		<p>
+		<strong>Return Value:</strong> void
+		</p>
+		<p>
+		<strong>Description:</strong>
+		</p>
+		<p>
+		Turn tracing on for all trace threads.  If tracing is not turned
+		on for a thread(this includes the main() program thread)
+		tracing will not occur.
+		</p>
+		<p>
+		<strong>Example:</strong>
+		</p>
+		<p>
+		TRC_TURN_ON();
+		</p>
+		<hr>
+		<p>
+		</td>
+	</tr>
+
+<!--------------------------------------------------------------------------------------
+	2.3.4 TRC_TURN_OFF()	
+--------------------------------------------------------------------------------------->
+	<tr>
+		<td class=contentCellTd height=30 align=left valign=top>
+		<a name="SEC_2_3_4"></a>
+		<h4 valign=middle>2.3.4 TRC_TURN_OFF()</h4>
+		</td>
+	</tr>
+	<tr>
+		<td class=contentCellTd>
+		<p>
+		<strong>Arguments: </strong> void
+		</p>
+		<p>
+		<strong>Return Value:</strong> void
+		</p>
+		<p>
+		<strong>Description:</strong>
+		</p>
+		<p>
+		Turn tracing off for all trace threads.
+		</p>
+		<p>
+		<strong>Example:</strong>
+		</p>
+		<p>
+		TRC_TURN_OFF();
+		</p>
+		</td>
+	</tr>
+
+<!--------------------------------------------------------------------------------------
+	2.4 The Trace Output Stream
+--------------------------------------------------------------------------------------->
+	<tr>
+		<td class=contentCellTd height=30 align=left valign=top>
+		<a name="SEC_2_4"></a>
+		<h3 valign=middle>2.4 The Trace Output Stream</h3>
+		</td>
+	</tr>
+	<tr>
+		<td class=contentCellTd align=left valign=top>
+		<p>
+		Use the TRC_FILE() macro to set the trace output stream for 
+		the trace calls.  Trace information can be directed to stdout(default),
+		stderr, or to a file.
+		</p>
+		</td>
+	</tr>
+
+<!--------------------------------------------------------------------------------------
+	2.4.1 TRC_FILE(a)	
+--------------------------------------------------------------------------------------->
+	<tr>
+		<td class=contentCellTd height=30 align=left valign=top>
+		<a name="SEC_2_4_1"></a>
+		<h4 valign=middle>2.4.1 TRC_FILE(a)</h4>
+		</td>
+	</tr>
+	<tr>
+		<td class=contentCellTd>
+		<strong>Arguments:</strong>
+		<p>
+		<table border=1>
+			<tr valign=top>
+				<td>Name</td>
+				<td>Type</td>
+				<td>Description</td>
+			</tr>
+			<tr valign=top>
+				<td>a</td>
+				<td>const char *</td>
+				<td>trace output stream:
+				<p>
+				<table border=1>
+					<tr>
+						<td>NULL</td>
+						<td>standard output</td>
+					</tr>
+					<tr>
+						<td>"stdout"</td>
+						<td>standard output</td>
+					</tr>
+					<tr>
+						<td>"stderr"</td>
+						<td>standard error</td>
+					</tr>
+					<tr>
+					<td>"filename"</td>
+					<td>output to "filename"</td>
+					</tr>
+				</table>
+				</p>
+				</td>
+			</tr>
+		</table>
+		<p>
+		<strong>Return Value:</strong>
+		</p>
+		<p>
+		<table border=1>
+			<tr>
+				<td>Type</td>
+				<td>Description</td>
+			</tr>
+			<tr valign=top>
+				<td>int</td>
+				<td>	
+				<table border=1>
+					<tr>
+						<td>0</td>
+						<td>success</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>failure</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+		</table>
+		</p>
+		<p>
+		<strong>Description:</strong>
+		</p>
+		<p>
+		New output stream for trace library becomes &lt;a&gt;
+		</p>
+		<p>
+		<strong>Example:</strong>
+		</p>
+		<p>
+		TRC_FILE("myfile.trc");
+		</p>
+		<p>
+		Send all trace output to the file "myfile.trc".
+		</p>
+		</td>
+	</tr>
+
+<!--------------------------------------------------------------------------------------
+	2.5 Working With Trace Threads
+--------------------------------------------------------------------------------------->
+	<tr>
+		<td class=contentCellTd height=30 align=left valign=top>
+		<a name="SEC_2_5"></a>
+		<h3 valign=middle>2.5 Working With Trace Threads</h3>
+		</td>
+	</tr>
+	<tr>
+		<td class=contentCellTd align=left valign=top>
+		<p>
+		CTrace provides independant tracing for multiple program
+		threads.  Before tracing can occur on any thread(including
+		the main() program thread in a single threaded application)
+		the thread needs to be added to the trace library using the
+		TRC_ADD_THREAD() macro.  It can later be removed using the
+		TRC_REMOVE_THREAD() macro.
+		</p>
+		<p>
+		Once a thread has been added to the trace library, it can 
+		have tracing turned on and off for it using the 
+		TRC_TURN_THREAD_ON() and TRC_TURN_THREAD_OFF() macros.
+		</p>
+		</td>
+	</tr>
+
+<!--------------------------------------------------------------------------------------
+	2.5.1 TRC_ADD_THREAD(a,b)	
+--------------------------------------------------------------------------------------->
+	<tr>
+		<td class=contentCellTd height=30 align=left valign=top>
+		<a name="SEC_2_5_1"></a>
+		<h4 valign=middle>2.5.1 TRC_ADD_THREAD(a,b)</h4>
+		</td>
+	</tr>
+	<tr>
+		<td class=contentCellTd>
+		<strong>Arguments:</strong>
+		<p>
+		<table border=1>
+			<tr valign=top>
+				<td>Name</td>
+				<td>Type</td>
+				<td>Description</td>
+			</tr>
+			<tr valign=top>
+				<td>a</td>
+				<td>const char *</td>
+				<td>Trace output thread name</td>
+			</tr>
+			<tr valign=top>
+				<td>b</td>
+				<td>tid_t</td>
+				<td>Thread id</td>
+			</tr>
+		</table>
+		<p>
+		<strong>Return Value:</strong>
+		</p>
+		<p>
+		<table border=1>
+			<tr>
+				<td>Type</td>
+				<td>Description</td>
+			</tr>
+			<tr valign=top>
+				<td>int</td>
+				<td>	
+				<table border=1>
+					<tr>
+						<td>0</td>
+						<td>success</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>failure</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+		</table>
+		</p>
+		<p>
+		<strong>Description:</strong>
+		</p>
+		<p>
+		Add thread with display name &lt;a&gt and id &lt;b&gt; to trace library.
+		If &lt;b&gt equals 0 thread id defaults to the calling thread of this macro.
+		The CTrace library keeps a data structure in memory for each tracable thread.
+		For this reason, even the main() program
+		thread must be added with TRC_ADD_THREAD(argv[0], 0).
+		</p>
+		<p>
+		<strong>Example:</strong>
+		</p>
+		<p>
+		TRC_ADD_THREAD("thread1", 0);
+		</p>
+		<p>
+		Add the calling thread of the macro to the trace library.
+		Refer to it as "thread1" in the output stream.
+		<hr>
+		</td>
+	</tr>
+
+<!--------------------------------------------------------------------------------------
+	2.5.2 TRC_REMOVE_THREAD(a)	
+--------------------------------------------------------------------------------------->
+	<tr>
+		<td class=contentCellTd height=30 align=left valign=top>
+		<a name="SEC_2_5_2"></a>
+		<h4 valign=middle>2.5.2 TRC_REMOVE_THREAD(a)</h4>
+		</td>
+	</tr>
+	<tr>
+		<td class=contentCellTd>
+		<strong>Arguments:</strong>
+		<p>
+		<table border=1>
+			<tr valign=top>
+				<td>Name</td>
+				<td>Type</td>
+				<td>Description</td>
+			</tr>
+			<tr valign=top>
+				<td>a</td>
+				<td>tid_t</td>
+				<td>Thread id</td>
+			</tr>
+		</table>
+		<p>
+		<strong>Return Value:</strong>
+		</p>
+		<p>
+		<table border=1>
+			<tr>
+				<td>Type</td>
+				<td>Description</td>
+			</tr>
+			<tr valign=top>
+				<td>int</td>
+				<td>	
+				<table border=1>
+					<tr>
+						<td>0</td>
+						<td>success</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>failure</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+		</table>
+		</p>
+		<p>
+		<strong>Description:</strong>
+		</p>
+		<p>
+		Remove thread with id &lt;a&gt; from trace library.
+		If &lt;a&gt equals 0 thread id defaults to the calling thread of this macro.
+		</p>
+		<p>
+		<strong>Example:</strong>
+		</p>
+		<p>
+		TRC_REMOVE_THREAD(0);
+		</p>
+		<p>
+		Remove the calling thread of the macro from the trace library.  
+		<hr>
+		</td>
+	</tr>
+
+<!--------------------------------------------------------------------------------------
+	2.5.3 TRC_TURN_THREAD_ON(a)	
+--------------------------------------------------------------------------------------->
+	<tr>
+		<td class=contentCellTd height=30 align=left valign=top>
+		<a name="SEC_2_5_3"></a>
+		<h4 valign=middle>2.5.3 TRC_TURN_THREAD_ON(a)</h4>
+		</td>
+	</tr>
+	<tr>
+		<td class=contentCellTd>
+		<strong>Arguments:</strong>
+		<p>
+		<table border=1>
+			<tr valign=top>
+				<td>Name</td>
+				<td>Type</td>
+				<td>Description</td>
+			</tr>
+			<tr valign=top>
+				<td>a</td>
+				<td>tid_t</td>
+				<td>Thread id</td>
+			</tr>
+		</table>
+		<p>
+		<strong>Return Value:</strong>
+		</p>
+		<p>
+		<table border=1>
+			<tr>
+				<td>Type</td>
+				<td>Description</td>
+			</tr>
+			<tr valign=top>
+				<td>int</td>
+				<td>	
+				<table border=1>
+					<tr>
+						<td>0</td>
+						<td>success</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>failure</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+		</table>
+		</p>
+		<p>
+		<strong>Description:</strong>
+		</p>
+		<p>
+		Turn tracing on for thread with id &lt;a&gt;.
+		If &lt;a&gt equals 0 thread id defaults to the calling thread of this macro.
+		</p>
+		<p>
+		<strong>Example:</strong>
+		</p>
+		<p>
+		TRC_TURN_THREAD_ON(0);
+		</p>
+		<p>
+		Turn tracing on for the calling thread of the macro.  
+		<hr>
+		</td>
+	</tr>
+
+<!--------------------------------------------------------------------------------------
+	2.5.4 TRC_TURN_THREAD_OFF(a)	
+--------------------------------------------------------------------------------------->
+	<tr>
+		<td class=contentCellTd height=30 align=left valign=top>
+		<a name="SEC_2_5_4"></a>
+		<h4 valign=middle>2.5.4 TRC_TURN_THREAD_OFF(a)</h4>
+		</td>
+	</tr>
+	<tr>
+		<td class=contentCellTd>
+		<strong>Arguments:</strong>
+		<p>
+		<table border=1>
+			<tr valign=top>
+				<td>Name</td>
+				<td>Type</td>
+				<td>Description</td>
+			</tr>
+			<tr valign=top>
+				<td>a</td>
+				<td>tid_t</td>
+				<td>Thread id</td>
+			</tr>
+		</table>
+		<p>
+		<strong>Return Value:</strong>
+		</p>
+		<p>
+		<table border=1>
+			<tr>
+				<td>Type</td>
+				<td>Description</td>
+			</tr>
+			<tr valign=top>
+				<td>int</td>
+				<td>	
+				<table border=1>
+					<tr>
+						<td>0</td>
+						<td>success</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>failure</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+		</table>
+		</p>
+		<p>
+		<strong>Description:</strong>
+		</p>
+		<p>
+		Turn tracing off for thread with id &lt;a&gt;.
+		If &lt;a&gt equals 0 thread id defaults to the calling thread of this macro.
+		</p>
+		<p>
+		<strong>Example:</strong>
+		</p>
+		<p>
+		TRC_TURN_THREAD_OFF(0);
+		</p>
+		<p>
+		Turn tracing off for the calling thread of the macro.  
+		<hr>
+		</td>
+	</tr>
+
+<!--------------------------------------------------------------------------------------
+	2.6 Working With Trace Levels
+--------------------------------------------------------------------------------------->
+	<tr>
+		<td class=contentCellTd height=30 align=left valign=top>
+		<a name="SEC_2_6"></a>
+		<h3 valign=middle>2.6 Working With Trace Levels</h3>
+		</td>
+	</tr>
+	<tr>
+		<td class=contentCellTd align=left valign=top>
+		<p>
+		Every trace output call(TRC_ENTER, TRC_RETURN, TRC_VOID_RETURN,
+		TRC_TRACE) except TRC_ERROR is passed a tlevel_t argument.
+		This argument tells the trace library which level(s) the 
+		trace output call should operate on.  TRC_ERROR operates
+		on tlevel_t TRC_ERR by default.
+		</p>
+		<p>
+		Therefore, when the program starts up, every trace output
+		call embedded in it has a predefined hard-coded trace 
+		level(s).  TRC_SET_LEVEL(), TRC_ADD_LEVEL() and TRC_REMOVE_LEVEL()
+		macros effectively activate or deactivate these tracing levels.
+		The "SET" macros perform a blanket overwrite of all currently
+		activated levels with the new level(s) passed in as the parameter.
+		The "ADD" and "REMOVE" macros enable finer granularity by retaining
+		any existing levels that dont confict with the level(s) passed in
+		as the parameter.
+		</p>
+		</td>
+	</tr>
+
+<!--------------------------------------------------------------------------------------
+	2.6.1 TRC_SET_LEVEL(a)	
+--------------------------------------------------------------------------------------->
+	<tr>
+		<td class=contentCellTd height=30 align=left valign=top>
+		<a name="SEC_2_6_1"></a>
+		<h4 valign=middle>2.6.1 TRC_SET_LEVEL(a)</h4>
+		</td>
+	</tr>
+	<tr>
+		<td class=contentCellTd>
+		<strong>Arguments:</strong>
+		<p>
+		<table border=1>
+			<tr valign=top>
+				<td>Name</td>
+				<td>Type</td>
+				<td>Description</td>
+			</tr>
+			<tr valign=top>
+				<td>a</td>
+				<td>tlevel_t</td>
+				<td>trace level(s)</td>
+			</tr>
+		</table>
+		<p>
+		<strong>Return Value:</strong>
+		</p>
+		<p>
+		<table border=1>
+			<tr>
+				<td>Type</td>
+				<td>Description</td>
+			</tr>
+			<tr valign=top>
+				<td>int</td>
+				<td>	
+				<table border=1>
+					<tr>
+						<td>0</td>
+						<td>success</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>failure</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+		</table>
+		</p>
+		<p>
+		<strong>Description:</strong>
+		</p>
+		<p>
+		Set level &lt;a&gt; in all added trace threads.
+		&lt;a&gt may be any legal tlevel_t including an Ored 
+		combination of any legal tlevel_t, eg TRC1|TRC2.
+		Any previous level settings will be made obsolete.
+		</p>
+		<p>
+		<strong>Example:</strong>
+		</p>
+		<p>
+		TRC_SET_LEVEL(TRC1|TRC2);
+		</p>
+		<p>
+		Set tracing at levels TRC1 and TRC2.  
+		<hr>
+		</td>
+	</tr>
+
+<!--------------------------------------------------------------------------------------
+	2.6.2 TRC_ADD_LEVEL(a)	
+--------------------------------------------------------------------------------------->
+	<tr>
+		<td class=contentCellTd height=30 align=left valign=top>
+		<a name="SEC_2_6_2"></a>
+		<h4 valign=middle>2.6.2  TRC_ADD_LEVEL(a)</h4>
+		</td>
+	</tr>
+	<tr>
+		<td class=contentCellTd>
+		<strong>Arguments:</strong>
+		<p>
+		<table border=1>
+			<tr valign=top>
+				<td>Name</td>
+				<td>Type</td>
+				<td>Description</td>
+			</tr>
+			<tr valign=top>
+				<td>a</td>
+				<td>tlevel_t</td>
+				<td>trace level(s)</td>
+			</tr>
+		</table>
+		<p>
+		<strong>Return Value:</strong>
+		</p>
+		<p>
+		<table border=1>
+			<tr>
+				<td>Type</td>
+				<td>Description</td>
+			</tr>
+			<tr valign=top>
+				<td>int</td>
+				<td>	
+				<table border=1>
+					<tr>
+						<td>0</td>
+						<td>success</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>failure</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+		</table>
+		</p>
+		<p>
+		<strong>Description:</strong>
+		</p>
+		<p>
+		Add level &lt;a&gt; to all added trace threads.
+		&lt;a&gt may be any legal tlevel_t including an Ored 
+		combination of any legal tlevel_t, eg TRC1|TRC2.
+		Any previous level settings not conflicting with
+		&lt;a&gt will be retained.
+		</p>
+		<p>
+		<strong>Example:</strong>
+		</p>
+		<p>
+		TRC_ADD_LEVEL(TRC4);
+		</p>
+		<p>
+		Add level TRC4 to existing tracing levels.  
+		<hr>
+		</td>
+	</tr>
+
+<!--------------------------------------------------------------------------------------
+	2.6.3 TRC_REMOVE_LEVEL(a)	
+--------------------------------------------------------------------------------------->
+	<tr>
+		<td class=contentCellTd height=30 align=left valign=top>
+		<a name="SEC_2_6_3"></a>
+		<h4 valign=middle>2.6.3 TRC_REMOVE_LEVEL(a)</h4>
+		</td>
+	</tr>
+	<tr>
+		<td class=contentCellTd>
+		<strong>Arguments:</strong>
+		<p>
+		<table border=1>
+			<tr valign=top>
+				<td>Name</td>
+				<td>Type</td>
+				<td>Description</td>
+			</tr>
+			<tr valign=top>
+				<td>a</td>
+				<td>tlevel_t</td>
+				<td>trace level(s)</td>
+			</tr>
+		</table>
+		<p>
+		<strong>Return Value:</strong>
+		</p>
+		<p>
+		<table border=1>
+			<tr>
+				<td>Type</td>
+				<td>Description</td>
+			</tr>
+			<tr valign=top>
+				<td>int</td>
+				<td>	
+				<table border=1>
+					<tr>
+						<td>0</td>
+						<td>success</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>failure</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+		</table>
+		</p>
+		<p>
+		<strong>Description:</strong>
+		</p>
+		<p>
+		Remove level &lt;a&gt; from all added trace threads.
+		&lt;a&gt may be any legal tlevel_t including an Ored 
+		combination of any legal tlevel_t, eg TRC1|TRC2.
+		Any previous level settings not conflicting with
+		&lt;a&gt will be retained.
+		</p>
+		<p>
+		<strong>Example:</strong>
+		</p>
+		<p>
+		TRC_REMOVE_LEVEL(TRC4);
+		</p>
+		<p>
+		Remove level TRC4 from existing tracing levels.  
+		<hr>
+		</td>
+	</tr>
+
+<!--------------------------------------------------------------------------------------
+	2.6.4 TRC_SET_THREAD_LEVEL(a,b)	
+--------------------------------------------------------------------------------------->
+	<tr>
+		<td class=contentCellTd height=30 align=left valign=top>
+		<a name="SEC_2_6_4"></a>
+		<h4 valign=middle>2.6.4 TRC_SET_THREAD_LEVEL(a,b)</h4>
+		</td>
+	</tr>
+	<tr>
+		<td class=contentCellTd>
+		<strong>Arguments:</strong>
+		<p>
+		<table border=1>
+			<tr valign=top>
+				<td>Name</td>
+				<td>Type</td>
+				<td>Description</td>
+			</tr>
+			<tr valign=top>
+				<td>a</td>
+				<td>tlevel_t</td>
+				<td>trace level(s)</td>
+			</tr>
+			<tr valign=top>
+				<td>b</td>
+				<td>tid_t</td>
+				<td>thread id</td>
+			</tr>
+		</table>
+		<p>
+		<strong>Return Value:</strong>
+		</p>
+		<p>
+		<table border=1>
+			<tr>
+				<td>Type</td>
+				<td>Description</td>
+			</tr>
+			<tr valign=top>
+				<td>int</td>
+				<td>	
+				<table border=1>
+					<tr>
+						<td>0</td>
+						<td>success</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>failure</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+		</table>
+		</p>
+		<p>
+		<strong>Description:</strong>
+		</p>
+		<p>
+		Set level &lt;a&gt; in thread &lt;b&gt;.
+		&lt;a&gt may be any legal tlevel_t including an Ored 
+		combination of any legal tlevel_t, eg TRC1|TRC2.
+		Any previous level settings will be made obsolete.
+		If &lt;b&gt; equals 0 thread id defaults to the 
+		calling thread of this macro.
+		</p>
+		<p>
+		<strong>Example:</strong>
+		</p>
+		<p>
+		TRC_SET_THREAD_LEVEL(TRC_ALL, 0);
+		</p>
+		<p>
+		Set tracing at all levels for the calling thread of this macro.  
+		<hr>
+		</td>
+	</tr>
+
+<!--------------------------------------------------------------------------------------
+	2.6.5 TRC_ADD_THREAD_LEVEL(a,b)	
+--------------------------------------------------------------------------------------->
+	<tr>
+		<td class=contentCellTd height=30 align=left valign=top>
+		<a name="SEC_2_6_5"></a>
+		<h4 valign=middle>2.6.5 TRC_ADD_THREAD_LEVEL(a,b)</h4>
+		</td>
+	</tr>
+	<tr>
+		<td class=contentCellTd>
+		<strong>Arguments:</strong>
+		<p>
+		<table border=1>
+			<tr valign=top>
+				<td>Name</td>
+				<td>Type</td>
+				<td>Description</td>
+			</tr>
+			<tr valign=top>
+				<td>a</td>
+				<td>tlevel_t</td>
+				<td>trace level(s)</td>
+			</tr>
+			<tr valign=top>
+				<td>b</td>
+				<td>tid_t</td>
+				<td>thread id</td>
+			</tr>
+		</table>
+		<p>
+		<strong>Return Value:</strong>
+		</p>
+		<p>
+		<table border=1>
+			<tr>
+				<td>Type</td>
+				<td>Description</td>
+			</tr>
+			<tr valign=top>
+				<td>int</td>
+				<td>	
+				<table border=1>
+					<tr>
+						<td>0</td>
+						<td>success</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>failure</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+		</table>
+		</p>
+		<p>
+		<strong>Description:</strong>
+		</p>
+		<p>
+		Add level &lt;a&gt; to thread &lt;b&gt;.
+		&lt;a&gt may be any legal tlevel_t including an Ored 
+		combination of any legal tlevel_t, eg TRC1|TRC2.
+		Any previous level settings not conflicting with
+		&lt;a&gt will be retained.
+		If &lt;b&gt; equals 0 thread id defaults to the 
+		calling thread of this macro.
+		</p>
+		<p>
+		<strong>Example:</strong>
+		</p>
+		<p>
+		TRC_ADD_THREAD_LEVEL(TRC4, 23);
+		</p>
+		<p>
+		Add level TRC4 to existing tracing levels in thread with id 23.  
+		<hr>
+		</td>
+	</tr>
+
+<!--------------------------------------------------------------------------------------
+	2.6.6 TRC_REMOVE_THREAD_LEVEL(a,b)	
+--------------------------------------------------------------------------------------->
+	<tr>
+		<td class=contentCellTd height=30 align=left valign=top>
+		<a name="SEC_2_6_6"></a>
+		<h4 valign=middle>2.6.6 TRC_REMOVE_THREAD_LEVEL(a,b)</h4>
+		</td>
+	</tr>
+	<tr>
+		<td class=contentCellTd>
+		<strong>Arguments:</strong>
+		<p>
+		<table border=1>
+			<tr valign=top>
+				<td>Name</td>
+				<td>Type</td>
+				<td>Description</td>
+			</tr>
+			<tr valign=top>
+				<td>a</td>
+				<td>tlevel_t</td>
+				<td>trace level(s)</td>
+			</tr>
+			<tr valign=top>
+				<td>b</td>
+				<td>tid_t</td>
+				<td>thread id</td>
+			</tr>
+		</table>
+		<p>
+		<strong>Return Value:</strong>
+		</p>
+		<p>
+		<table border=1>
+			<tr>
+				<td>Type</td>
+				<td>Description</td>
+			</tr>
+			<tr valign=top>
+				<td>int</td>
+				<td>	
+				<table border=1>
+					<tr>
+						<td>0</td>
+						<td>success</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>failure</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+		</table>
+		</p>
+		<p>
+		<strong>Description:</strong>
+		</p>
+		<p>
+		Remove level &lt;a&gt; from thread &lt;b&gt;.
+		&lt;a&gt may be any legal tlevel_t including an Ored 
+		combination of any legal tlevel_t, eg TRC1|TRC2.
+		Any previous level settings not conflicting with
+		&lt;a&gt will be retained.
+		If &lt;b&gt; equals 0 thread id defaults to the 
+		calling thread of this macro.
+		</p>
+		<p>
+		<strong>Example:</strong>
+		</p>
+		<p>
+		TRC_REMOVE_THREAD_LEVEL(TRC4, 23);
+		</p>
+		<p>
+		Remove level TRC4 from existing tracing levels in thread with id 23.  
+		<hr>
+		</td>
+	</tr>
+
+<!--------------------------------------------------------------------------------------
+	2.7 Performing a Local Trace
+--------------------------------------------------------------------------------------->
+	<tr>
+		<td class=contentCellTd height=30 align=left valign=top>
+		<a name="SEC_2_7"></a>
+		<h3 valign=middle>2.7 Performing a Local Trace</h3>
+		</td>
+	</tr>
+	<tr>
+		<td class=contentCellTd align=left valign=top>
+		<p>
+		Every trace output call(TRC_ENTER, TRC_RETURN, TRC_VOID_RETURN,
+		TRC_TRACE) except TRC_ERROR is passed a tlocal_t argument.
+		This argument represents a logical independant software unit of
+		the program.  
+		</p>
+		<p>
+		Therefore, when the program starts up, every trace output
+		call embedded in it has a predefined hard-coded trace 
+		tlocal_t flag.  TRC_TURN_LOCAL_ON(), TRC_TURN_LOCAL_OFF() 
+		macros effectively activate or deactivate tracing calls containing
+		the tlocal_t flag passed in as the parameter.
+		TRC_SET_LOCAL_LEVEL(), TRC_ADD_LOCAL_LEVE(), TRC_REMOVE_LOCAL_LEVEL()
+		macros provide a finer level of granularity over local tracing.
+		</p>
+		</td>
+	</tr>
+
+<!--------------------------------------------------------------------------------------
+	2.7.1 TRC_TURN_LOCAL_ON(a)	
+--------------------------------------------------------------------------------------->
+	<tr>
+		<td class=contentCellTd height=30 align=left valign=top>
+		<a name="SEC_2_7_1"></a>
+		<h4 valign=middle>2.7.1 TRC_TURN_LOCAL_ON(a)</h4>
+		</td>
+	</tr>
+	<tr>
+		<td class=contentCellTd>
+		<strong>Arguments:</strong>
+		<p>
+		<table border=1>
+			<tr valign=top>
+				<td>Name</td>
+				<td>Type</td>
+				<td>Description</td>
+			</tr>
+			<tr valign=top>
+				<td>a</td>
+				<td>tlocal_t</td>
+				<td>local variable</td>
+			</tr>
+		</table>
+		<p>
+		<strong>Return Value:</strong>
+		</p>
+		<p>
+		<table border=1>
+			<tr>
+				<td>Type</td>
+				<td>Description</td>
+			</tr>
+			<tr valign=top>
+				<td>int</td>
+				<td>	
+				<table border=1>
+					<tr>
+						<td>0</td>
+						<td>success</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>failure</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+		</table>
+		</p>
+		<p>
+		<strong>Description:</strong>
+		</p>
+		<p>
+		Turn tracing on for tlocal_t &lt;a&gt;.
+		A logical local software unit will all share the same
+		tlocal_t variable.  When this tlocal_t flag is set, 
+		tracing of this local software unit may be performed
+		in isolation.
+		</p>
+		<p>
+		<strong>Example:</strong>
+		</p>
+		<p>
+		TRC_TURN_LOCAL_ON(tla);
+		</p>
+		<p>
+		Turn tracing on for the logical software unit sharing
+		the tlocal_t variable tla).
+		<hr>
+		</td>
+	</tr>
+
+<!--------------------------------------------------------------------------------------
+	2.7.2 TRC_TURN_LOCAL_OFF(a)	
+--------------------------------------------------------------------------------------->
+	<tr>
+		<td class=contentCellTd height=30 align=left valign=top>
+		<a name="SEC_2_7_2"></a>
+		<h4 valign=middle>2.7.2 TRC_TURN_LOCAL_OFF(a)</h4>
+		</td>
+	</tr>
+	<tr>
+		<td class=contentCellTd>
+		<strong>Arguments:</strong>
+		<p>
+		<table border=1>
+			<tr valign=top>
+				<td>Name</td>
+				<td>Type</td>
+				<td>Description</td>
+			</tr>
+			<tr valign=top>
+				<td>a</td>
+				<td>tlocal_t</td>
+				<td>local variable</td>
+			</tr>
+		</table>
+		<p>
+		<strong>Return Value:</strong>
+		</p>
+		<p>
+		<table border=1>
+			<tr>
+				<td>Type</td>
+				<td>Description</td>
+			</tr>
+			<tr valign=top>
+				<td>int</td>
+				<td>	
+				<table border=1>
+					<tr>
+						<td>0</td>
+						<td>success</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>failure</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+		</table>
+		</p>
+		<p>
+		<strong>Description:</strong>
+		</p>
+		<p>
+		Turn tracing off for tlocal_t &lt;a&gt;.
+		A logical local software unit will all share the same
+		tlocal_t variable.  When this tlocal_t flag is set, 
+		tracing of this local software unit may be performed
+		in isolation.
+		</p>
+		<p>
+		<strong>Example:</strong>
+		</p>
+		<p>
+		TRC_TURN_LOCAL_OFF(tla);
+		</p>
+		<p>
+		Turn tracing off for the logical software unit sharing
+		the tlocal_t variable tla.
+		<hr>
+		</td>
+	</tr>
+
+<!--------------------------------------------------------------------------------------
+	2.7.3 TRC_SET_LOCAL_LEVEL(a,b)	
+--------------------------------------------------------------------------------------->
+	<tr>
+		<td class=contentCellTd height=30 align=left valign=top>
+		<a name="SEC_2_7_3"></a>
+		<h4 valign=middle>2.7.3 TRC_SET_LOCAL_LEVEL(a,b)</h4>
+		</td>
+	</tr>
+	<tr>
+		<td class=contentCellTd>
+		<strong>Arguments:</strong>
+		<p>
+		<table border=1>
+			<tr valign=top>
+				<td>Name</td>
+				<td>Type</td>
+				<td>Description</td>
+			</tr>
+			<tr valign=top>
+				<td>a</td>
+				<td>tlocal_t</td>
+				<td>local variable</td>
+			</tr>
+			<tr valign=top>
+				<td>b</td>
+				<td>tlevel_t</td>
+				<td>trace level(s)</td>
+			</tr>
+		</table>
+		<p>
+		<strong>Return Value:</strong>
+		</p>
+		<p>
+		<table border=1>
+			<tr>
+				<td>Type</td>
+				<td>Description</td>
+			</tr>
+			<tr valign=top>
+				<td>int</td>
+				<td>	
+				<table border=1>
+					<tr>
+						<td>0</td>
+						<td>success</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>failure</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+		</table>
+		</p>
+		<p>
+		<strong>Description:</strong>
+		</p>
+		<p>
+		Set level &lt;b&gt; in tlocal_t &lt;a&gt;.
+		&lt;b&gt may be any legal tlevel_t including an Ored 
+		combination of any legal tlevel_t, eg TRC1|TRC2.
+		Any previous level settings will be made obsolete.
+		</p>
+		<p>
+		<strong>Example:</strong>
+		</p>
+		<p>
+		TRC_SET_LOCAL_LEVEL(tla, TRC_ERROR);
+		</p>
+		<p>
+		Set tracing to show TRC_ERROR calls only 
+		for the logical software unit sharing
+		the tlocal_t variable tla.
+		<hr>
+		</td>
+	</tr>
+
+<!--------------------------------------------------------------------------------------
+	2.7.4 TRC_ADD_LOCAL_LEVEL(a,b)	
+--------------------------------------------------------------------------------------->
+	<tr>
+		<td class=contentCellTd height=30 align=left valign=top>
+		<a name="SEC_2_7_4"></a>
+		<h4 valign=middle>2.7.4 TRC_ADD_LOCAL_LEVEL(a,b)</h4>
+		</td>
+	</tr>
+	<tr>
+		<td class=contentCellTd>
+		<strong>Arguments:</strong>
+		<p>
+		<table border=1>
+			<tr valign=top>
+				<td>Name</td>
+				<td>Type</td>
+				<td>Description</td>
+			</tr>
+			<tr valign=top>
+				<td>a</td>
+				<td>tlocal_t</td>
+				<td>local variable</td>
+			</tr>
+			<tr valign=top>
+				<td>b</td>
+				<td>tlevel_t</td>
+				<td>trace level(s)</td>
+			</tr>
+		</table>
+		<p>
+		<strong>Return Value:</strong>
+		</p>
+		<p>
+		<table border=1>
+			<tr>
+				<td>Type</td>
+				<td>Description</td>
+			</tr>
+			<tr valign=top>
+				<td>int</td>
+				<td>	
+				<table border=1>
+					<tr>
+						<td>0</td>
+						<td>success</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>failure</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+		</table>
+		</p>
+		<p>
+		<strong>Description:</strong>
+		</p>
+		<p>
+		Add level &lt;b&gt; to tlocal_t &lt;a&gt;.
+		&lt;b&gt may be any legal tlevel_t including an Ored 
+		combination of any legal tlevel_t, eg TRC1|TRC2.
+		Any previous level settings not conflicting with &lt;b&bt
+		will be retained.
+		</p>
+		<p>
+		<strong>Example:</strong>
+		</p>
+		<p>
+		TRC_ADD_LOCAL_LEVEL(tla, TRC4);
+		</p>
+		<p>
+		Add tracing level TRC4 to the existing levels
+		for the logical software unit sharing
+		the tlocal_t variable tla.
+		<hr>
+		</td>
+	</tr>
+
+<!--------------------------------------------------------------------------------------
+	2.7.5 TRC_REMOVE_LOCAL_LEVEL(a)	
+--------------------------------------------------------------------------------------->
+	<tr>
+		<td class=contentCellTd height=30 align=left valign=top>
+		<a name="SEC_2_7_5"></a>
+		<h4 valign=middle>2.7.5 TRC_REMOVE_LOCAL_LEVEL(a,b)</h4>
+		</td>
+	</tr>
+	<tr>
+		<td class=contentCellTd>
+		<strong>Arguments:</strong>
+		<p>
+		<table border=1>
+			<tr valign=top>
+				<td>Name</td>
+				<td>Type</td>
+				<td>Description</td>
+			</tr>
+			<tr valign=top>
+				<td>a</td>
+				<td>tlocal_t</td>
+				<td>local variable</td>
+			</tr>
+			<tr valign=top>
+				<td>b</td>
+				<td>tlevel_t</td>
+				<td>trace level(s)</td>
+			</tr>
+		</table>
+		<p>
+		<strong>Return Value:</strong>
+		</p>
+		<p>
+		<table border=1>
+			<tr>
+				<td>Type</td>
+				<td>Description</td>
+			</tr>
+			<tr valign=top>
+				<td>int</td>
+				<td>	
+				<table border=1>
+					<tr>
+						<td>0</td>
+						<td>success</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>failure</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+		</table>
+		</p>
+		<p>
+		<strong>Description:</strong>
+		</p>
+		<p>
+		Remove level &lt;b&gt; from tlocal_t &lt;a&gt;.
+		&lt;b&gt may be any legal tlevel_t including an Ored 
+		combination of any legal tlevel_t, eg TRC1|TRC2.
+		Any previous level settings not conflicting with &lt;b&bt
+		will be retained.
+		</p>
+		<p>
+		<strong>Example:</strong>
+		</p>
+		<p>
+		TRC_REMOVE_LOCAL_LEVEL(tla, TRC4);
+		</p>
+		<p>
+		Remove tracing level TRC4 from the existing levels
+		for the logical software unit sharing
+		the tlocal_t variable tla.
+		<hr>
+		</td>
+	</tr>
+
+</table>
+
+</body>
+</html>

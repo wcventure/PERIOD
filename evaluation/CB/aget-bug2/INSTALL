@@ -1,0 +1,49 @@
+
++--------------------+
+|                    |
+| SUMMARY            |
+|                    |
++--------------------+
+
+A data race and atomicity violation bug in Aget.
+
++---------------------------------------------------------+
+|                                                         |
+| HOW TO INSTALL                                          |
+|                                                         |
++---------------------------------------------------------+
+
+1. Download aget-devel source
+-------------------------------------------------
+
+# tar jxvf aget-devel.tar.gz
+
+
+2. Apply the patch
+-------------------------------------------------
+
+# cd <aget_src_dir>
+# patch -p1 -i aget-bug2.patch
+
+
+3. Compile
+-------------------------------------------------
+
+# make
+
+
++---------------------------------------------------------+
+|                                                         |
+| REPRODUCE THE BUG                                       |
+|                                                         |
++---------------------------------------------------------+
+
+1. Downloading a big file and stop in the middle
+-------------------------------------------------
+
+./aget -l dl.txt http://www.gnu.org/licenses/gpl.txt
+
+If the bug is triggered, the program will have an assertion failure:
+
+verifier: verifier.c:101: read_log: Assertion `total_bwritten == bwritten' failed.
+Aborted

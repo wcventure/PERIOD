@@ -1,0 +1,8 @@
+src/nspr-4.8/
+src/*.tar.gz
+*.o.bc
+*.o
+.test.o
+.test.o.bc
+bin/
+out_*

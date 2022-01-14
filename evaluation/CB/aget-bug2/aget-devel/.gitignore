@@ -1,0 +1,8 @@
+*.o
+*.bc
+*.o.bc
+*.bc.r
+mssa.*
+*.dot
+so.*
+/aget

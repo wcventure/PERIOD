@@ -1,0 +1,255 @@
+diff -NbBrU 0 SVF_NEW/include/Graphs/PAG.h SVF/include/Graphs/PAG.h
+--- SVF_NEW/include/Graphs/PAG.h	2021-06-04 22:50:55.546760100 +0800
++++ SVF/include/Graphs/PAG.h	2021-04-12 15:15:20.815510600 +0800
+@@ -172,0 +173,2 @@
++	/// Whether to handle variant gep/field edge
++    static void handleVGep(bool b);
+diff -NbBrU 0 SVF_NEW/lib/Graphs/PAG.cpp SVF/lib/Graphs/PAG.cpp
+--- SVF_NEW/lib/Graphs/PAG.cpp	2021-06-04 22:50:55.981356800 +0800
++++ SVF/lib/Graphs/PAG.cpp	2021-04-12 15:15:21.816573800 +0800
+@@ -36,0 +37,3 @@
++static llvm::cl::opt<bool> HANDLEVGEP("vgep", llvm::cl::init(true),
++        llvm::cl::desc("Hanle variant gep/field edge"));
++
+@@ -991,0 +994,6 @@
++/*!
++ * Whether to handle variant gep/field edge
++ */
++void PAG::handleVGep(bool b) {
++    HANDLEVGEP = b;
++}
+diff -NbBrU 0 SVF_NEW/lib/MSSA/MemSSA.cpp SVF/lib/MSSA/MemSSA.cpp
+--- SVF_NEW/lib/MSSA/MemSSA.cpp	2021-06-04 22:50:56.031157400 +0800
++++ SVF/lib/MSSA/MemSSA.cpp	2021-04-12 15:15:21.899572400 +0800
+@@ -38 +38,2 @@
+-
++static llvm::cl::opt<bool> DumpRace("dump-race", llvm::cl::init(false),
++                                    llvm::cl::desc("Dump Race"));
+@@ -604,0 +606,173 @@
++static bool isInStruct(llvm::Value* val) {
++	// TODO: Determines that val is in the struct
++	// Cases:
++	// 1. gep inst
++	// 2. gep expr
++	// 3. ?
++
++	if (SVFUtil::isa<GetElementPtrInst>(val))
++		return true;
++	else if (CastInst *ci = SVFUtil::dyn_cast<CastInst>(val))
++		return isInStruct(ci->getOperand(0));
++	/*
++	   else if(ConstantExpr *ce = SVFUtil::dyn_cast<ConstantExpr>(val)) {
++	   if (ce->getOpcode() == Instruction::GetElementPtr) {
++	   return true;
++	   }
++	   }
++	   */
++
++	return false;
++}
++
++static bool isIntType(llvm::Type *ty) {
++	// TODO: if ty is int type or pointer to int, return true
++	if (ty->isIntegerTy())
++		return true;
++	if (PointerType *pty = SVFUtil::dyn_cast<PointerType>(ty))
++		return isIntType(pty->getElementType());
++	return false;
++}
++
++static bool printParentType(llvm::Value *val, llvm::raw_ostream& Out) {
++	// TODO: print the val's parent type and the offset
++	//       TY:OFST
++	if (CastInst *ci = SVFUtil::dyn_cast<CastInst>(val)) {
++		return printParentType(ci->getOperand(0), Out);
++	} else if (GetElementPtrInst *ge = SVFUtil::dyn_cast<GetElementPtrInst>(val)) {
++		// TODO: sometimes extracting the type is possible even if some indices are variables
++		bool flag = false;
++		Type *ty = NULL;
++		if (SVFUtil::isa<StructType>(ge->getSourceElementType())) {
++			flag = true;
++			ty = ge->getSourceElementType();
++		}
++		Value *op = NULL;
++		//Out << *ge << "\n\n";
++		for (llvm::generic_gep_type_iterator<GetElementPtrInst::op_iterator> gtit =
++				llvm::generic_gep_type_iterator<GetElementPtrInst::op_iterator>::begin(ge->getSourceElementType(), ge->idx_begin()),
++				gteit = llvm::generic_gep_type_iterator<GetElementPtrInst::op_iterator>::end(ge->idx_end());
++				gtit != gteit;
++				gtit++) {
++			//Out << *gtit.getIndexedType() << ' ' << *(gtit.getOperand()) << '\n';
++			if (flag && SVFUtil::isa<ConstantInt>(gtit.getOperand())) {
++				op = SVFUtil::cast<ConstantInt>(gtit.getOperand());
++			}
++			flag = false;
++			if (SVFUtil::isa<StructType>(gtit.getIndexedType())) {
++				ty = gtit.getIndexedType();
++				flag = true;
++			}
++		}
++		/*
++		   if (ty) {
++		   StructType* st = SVFUtil::cast<StructType>(ty);
++		   if (st->hasName()) {
++		   Out << st->getName() << '\n';
++		   }
++		   }
++		   if (op) {
++		   Out << *op << '\n';
++		   }
++		   */
++		if (ty && op) {
++			StructType* st = SVFUtil::cast<StructType>(ty);
++			if (st->hasName()) {
++				Out << st->getName() << ":" << *op;
++				return true;
++			}
++			return false;
++		} else if (!ty) {
++			// TODO: Is this right? GEP but no struct indexing, assuming array indexing
++			return printParentType(ge->getPointerOperand(), Out);
++		}
++	}
++	return false;
++}
++
++
++static inline void _printType(llvm::Type *ty, llvm::Value* val, llvm::raw_ostream& Out) {
++	// TODO: if ty is general type, and it is came from cast, print the source type of cast_
++
++	if (auto *ci = SVFUtil::dyn_cast<BitCastInst>(val)) {
++		Out << *(ci->getSrcTy());
++	} else if (ConstantExpr* ce = SVFUtil::dyn_cast<ConstantExpr>(val)) {
++		if (ce->getOpcode() == Instruction::BitCast)
++			Out << *(ce->getOperand(0)->getType());
++	} else {
++		Out << *(ty);
++	}
++}
++
++string memfunction[] = {"memcpy", "memmove", "strcpy"};
++
++#define LENGTH(arr) (sizeof(arr) / sizeof(*arr))
++static inline bool isMemAccessFunction(llvm::Function* func) {
++	std::string funcName = func->getName();
++	for (int i=0; i< LENGTH(memfunction); i++) {
++		if (funcName.find(memfunction[i]) != std::string::npos)
++			return true;
++	}
++	return false;
++}
++
++static bool isStackAccess(llvm::Value *val) {
++
++	if (AllocaInst *ai = SVFUtil::dyn_cast<AllocaInst>(val)) {
++		return true;
++	} else if (StoreInst *si = SVFUtil::dyn_cast<StoreInst>(val)) {
++		return isStackAccess(si->getPointerOperand());
++	} else if (LoadInst *li = SVFUtil::dyn_cast<LoadInst>(val)) {
++		return isStackAccess(li->getPointerOperand());
++	} else if (CastInst *ci = SVFUtil::dyn_cast<CastInst>(val)) {
++		return isStackAccess(ci->getOperand(0));
++	}
++
++	return false;
++}
++
++static inline void printType(llvm::Instruction &inst, llvm::raw_ostream& Out) {
++	//       What I'm interested in is
++	//       1. load
++	//       2. store
++	//       3. Extcall
++	//       3-1. memcpy
++	//       3-2. memmove
++	//       3-3. ?
++	//       4. ?
++	Out << "({";
++	if (LoadInst *li = SVFUtil::dyn_cast<LoadInst>(&inst)) {
++		auto *op = li->getPointerOperand();
++		//if (isInStruct(op)/* && isIntType(op->getType())*/) {
++		if(printParentType(op, Out)) {
++			Out << "->";
++		} else {
++			//}
++			_printType(li->getType(), li, Out);
++	}
++	} else if(StoreInst *si = SVFUtil::dyn_cast<StoreInst>(&inst)) {
++		auto* op = si->getValueOperand();
++		auto* val = si->getPointerOperand();
++		//if (isInStruct(val)/* && isIntType(val->getType())*/) {
++		// There are too many int type and they generate fake race candidates
++		// Print the parent struct type if possible
++		if(printParentType(val, Out)) {
++			Out << "->";
++		} else {
++			//}
++			_printType(op->getType(), op, Out);
++	}
++	} else if (isCallSite(&inst) && isExtCall(&inst) == true) {
++		CallInst* ci = SVFUtil::dyn_cast<CallInst>(&inst);
++
++		if (isMemAccessFunction(ci->getCalledFunction())) {
++			auto *op = ci->getArgOperand(0);
++			_printType(op->getType(), op, Out);
++		}
++	}
++
++	// I don't exit the program in the case that I don't expect
++	// In that case, result file will contain ({}) and I can string search it to identify what I missed.
++	Out << "})";
++}
++
+@@ -624 +798 @@
+-        if (hasFuncEntryChi(fun))
++        if (hasFuncEntryChi(fun) && !DumpRace)// I don't need ENCHI
+@@ -637 +811 @@
+-            if (bb.hasName())
++            if (bb.hasName() && !DumpRace) // I don't need the bb name
+@@ -640 +814 @@
+-            for(PHISet::iterator pi = phiSet.begin(), epi = phiSet.end(); pi !=epi; ++pi)
++            for(PHISet::iterator pi = phiSet.begin(), epi = phiSet.end(); !DumpRace && pi !=epi; ++pi) // Also I don't have any interest on PHI
+@@ -651 +825 @@
+-                if (isAppCall || isHeapAllocExtCall(&inst))
++                if ((isAppCall || isHeapAllocExtCall(&inst)) && !DumpRace) // Also I don't need
+@@ -684,0 +859,3 @@
++                    bool has_chi_or_mu = false;
++                    bool has_debug_loc = (inst.getDebugLoc() || !DumpRace);
++
+@@ -685,0 +863,2 @@
++                    if (isStackAccess(&inst))
++                        continue;
+@@ -687 +866 @@
+-                            bit!=ebit; ++bit)
++                            bit!=ebit && has_debug_loc; ++bit)
+@@ -699,0 +879 @@
++								has_chi_or_mu = true;
+@@ -704 +884 @@
+-
++					if (!DumpRace) {
+@@ -705,0 +886 @@
++					}
+@@ -717,0 +899 @@
++								has_chi_or_mu = true;
+@@ -721,0 +904,13 @@
++
++					if (DumpRace && has_chi_or_mu) {
++						// Print out the debug location
++						if (const llvm::DebugLoc &Loc = (inst.getDebugLoc())) { // Here I is an LLVM instruction
++							Out << "\t[[";
++							Loc.print(Out);
++							Out << "]]";
++							// Print out the type
++							printType(inst, Out);
++							Out << '\n';
++						}
++					}
++
+@@ -734 +929 @@
+-        if (hasReturnMu(fun))
++        if (hasReturnMu(fun) && !DumpRace)
+diff -NbBrU 0 SVF_NEW/lib/MemoryModel/PointerAnalysis.cpp SVF/lib/MemoryModel/PointerAnalysis.cpp
+--- SVF_NEW/lib/MemoryModel/PointerAnalysis.cpp	2021-06-04 22:50:56.113185100 +0800
++++ SVF/lib/MemoryModel/PointerAnalysis.cpp	2021-04-12 15:15:22.035575000 +0800
+@@ -65 +65 @@
+-static llvm::cl::opt<bool> PStat("stat", llvm::cl::init(true),
++static llvm::cl::opt<bool> PStat("stat", llvm::cl::init(false),
