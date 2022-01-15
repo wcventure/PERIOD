@@ -1,3 +1,5 @@
+*(PERIOD is a controlled concurrency testing tool, where a scheduler explores the space of possible interleavings of a concurrent program looking for bugs)*
+
 # Search-Based Concurrency Interleavings Exploration
 
 [![MIT License](https://img.shields.io/github/license/xiaocong/uiautomator.svg)](http://opensource.org/licenses/MIT)
