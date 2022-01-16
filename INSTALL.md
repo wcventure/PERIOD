@@ -9,7 +9,7 @@ The easiest way to use PERIOD is to use Docker. We strongly recommend installing
 **Docker**: The only requirement is to install Docker (version higher than 18.09.7). You can use the command `sudo apt-get install docker.io` to install the docker on your Linux machine. (If you have any questions on docker, you can see [Docker's Documentation](https://docs.docker.com/engine/install/ubuntu/)).
 
 **Add `period:latest` image on your system**. There are two ways of doing this:
-- `docker pull https://hub.docker.com/r/wcventure/period:master && docker tag https://hub.docker.com/r/wcventure/period:master period:latest`
+- `docker pull wcventure/period:stable && docker tag wcventure/period:stable period:latest`
 - Alternatively, you can build your own image with `sudo docker build -t period:latest --no-cache ./`
 
 **running a privileged container**

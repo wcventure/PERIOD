@@ -57,7 +57,7 @@ The easiest way to use PERIOD is to use Docker. We strongly recommend installing
 ### Installing
 
 - **Add `period:latest` image on your system**. There are two ways of doing this:
-  - `docker pull https://hub.docker.com/r/wcventure/period:master && docker tag https://hub.docker.com/r/wcventure/period:master period:latest`
+  - `docker pull wcventure/period:stable && docker tag wcventure/period:stable period:latest`
   - Alternatively, you can build your own image with `sudo docker build -t period:latest --no-cache ./`
 
 ### Running on Docker
