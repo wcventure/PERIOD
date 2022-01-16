@@ -1,5 +1,5 @@
-FFT
-fft.c
+FFT.tmp
+fft.c.tmp
 *.bc
 *.bc.r
 ConConfig.*
