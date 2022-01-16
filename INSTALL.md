@@ -2,7 +2,7 @@
 
 The easiest way to use PERIOD is to use Docker. We strongly recommend installing and running our tool based on Docker.
  
-## Install based on docker (simple and easy)
+## Installing based on docker (simple and easy)
 
 **Hardware Requirements:** Please use workstations/PC with multi-core processors, as PERIOD is a concurrency testing tool
 **Operating System:** >= Ubuntu 18.04 LTS (Requires kernel version >= 4.x due to the scheduling policy)
@@ -18,7 +18,7 @@ The easiest way to use PERIOD is to use Docker. We strongly recommend installing
 Then you will start a a docker container abd enter the configured environment of PERIOD.
 
  
-## Install from source code on local environment (for development)
+## Installing from source code on local environment (for development)
  
 If you really want to install the tool from source code on your host system, please ensure that your environment meets the following requirements. 
  
@@ -57,3 +57,12 @@ If you really want to install the tool from source code on your host system, ple
     # install wllvm
     sudo pip install -e $ROOT_DIR/ConFuzz/tool/wllvm/
     ```
+
+- **Usage**
+	
+	The only difference between "Installing based on docker" is that everytime you open a new terminal you need to set up environment variable.
+	
+	```
+	# set up environment
+    source tool/init_env.sh
+	```

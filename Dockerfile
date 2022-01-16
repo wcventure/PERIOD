@@ -20,6 +20,7 @@ RUN sudo pip install numpy
 RUN sudo pip3 install numpy
 RUN sudo pip3 install sysv_ipc
 
+RUN mkdir /usr/local/share/aclocal/
 RUN cp -rf /usr/share/aclocal/* /usr/local/share/aclocal/
 
 RUN tool/install_llvm.sh
