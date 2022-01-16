@@ -1,7 +1,6 @@
-
 # Advance Usage (Run PERIOD step by step)
 
-Previously, we recommend using the script `./build` we provided to build the benchmark programs. Here, we introduce how to use PERIOD for general programs. We use an example to quickly show you how to use PERIOD to test a given concurrent program. Consider the following multithreaded program (the code can be found in `/workdir/PERIOD/test/work`).
+Previously, we recommended using the script `./build` we provided to build the benchmark programs. Here, we introduce how to use PERIOD for general programs. We use an example to quickly show you how to use PERIOD to test a given concurrent program. Consider the following multithreaded program (the code can be found in `/workdir/PERIOD/test/work`).
 
 ```C
 01 #include <stdio.h>
@@ -32,16 +31,16 @@ Previously, we recommend using the script `./build` we provided to build the ben
 
 This program creates two threads. Each thread will write the shared variable `g`. In the beginning, both threads try to allocate a section of memory and write the address that points to allocated memory to variable g. Then if `g != NULL`, the memory pointed by g will be released. Finally, set `g = NULL`.
 
-Obviously, this program has a double-free and memory leak bug on the shared variable g. If the `g = (char*)malloc(10)`; in one thread execute following close at the `g = (char*)malloc(10)`; in another thread, a memory leak on g would happen. A double-free can occur if g in both threads become alias, and the `free(g)`; statement in one thread executes following close at the `free(g)`; in another thread, a double-free would happen. We want to see whether PERIOD can quickly find these two bugs and expose the buggy interleaving.
+Obviously, this program has a double-free and memory leak bug on the shared variable g. If the `g = (char*)malloc(10)`; in one thread execute following close at the `g = (char*)malloc(10)`; in another thread, a memory leak on g would happen. A double-free can occur if g in both threads become aliases, and the `free(g)`; statement in one thread executes following close at the `free(g)`; in another thread, a double-free would happen. We want to see whether PERIOD can quickly find these two bugs and expose the buggy interleaving.
 
 For using PERIOD, you need to perform the following step:
-1. Compile the program on LLVM platform and get its bitcode.
+1. Compile the program on the LLVM platform and get its bitcode.
 2. Perform our static analysis scripts to analyze key points for further scheduling.
 3. Import the information of key points to the environment variable  Con_PATH and perform instrumentation on the .bc file.
 4. Expose the bug through PERIOD's systematic testing.
 5. Reproduce the buggy interleavings if found the bugs.
 
-**Compile the program on LLVM platform and get its bitcode, according to the following rules.**
+**Compile the program on the LLVM platform and get its bitcode, according to the following rules.**
 
 - Preferably use static linking
 - Preferably use -g when compiling
@@ -63,7 +62,7 @@ extract-bc ./work
 
 **Perform our static analysis scripts to analyze key points for further scheduling.**
 
-Then use the script `staticAnalysis.sh` to perform the static analysis base on SVF. This will analyze key points for further scheduling (key points are the statements/expressions accessing shared memory locations or containing synchronization primitives): 
+Then use the script `staticAnalysis.sh` to perform the static analysis based on SVF. This will analyze key points for further scheduling (key points are the statements/expressions accessing shared memory locations or containing synchronization primitives): 
 ```sh
 $ROOT_DIR/tool/staticAnalysis/staticAnalysis.sh work
 ```
@@ -76,7 +75,7 @@ work.c:13
 work.c:9
 ```
 
-**Import the information of key points to the environment variable `Con_PATH`, and use the wapper `$ROOT_DIR/tool/staticAnalysis/DBDS-INSTRU/dbds-clang-fast++` to perform instrumentation on the `.bc` file (here can also add AddressSanitizer instrumentation).**
+**Import the information of key points to the environment variable `Con_PATH`, and use the wrapper `$ROOT_DIR/tool/staticAnalysis/DBDS-INSTRU/dbds-clang-fast++` to perform instrumentation on the `.bc` file (here can also add AddressSanitizer instrumentation).**
 ```sh
 export Con_PATH=$ROOT_DIR/test/work/ConConfig.work
 $ROOT_DIR/tool/staticAnalysis/DBDS-INSTRU/dbds-clang-fast++ -g -O0 -fno-omit-frame-pointer -fsanitize=address ./work.bc -o work
@@ -107,7 +106,7 @@ $ROOT_DIR/tool/DBDS/run_PDS.py -r out_work_1/Errors/000004_0000010_double-free .
 
 [AddressSanitizer](https://clang.llvm.org/docs/AddressSanitizer.html) (aka ASan) is a memory error detector for C/C++. PERIOD can be performed with AddressSanitizer.
 
-AddressSanitizer requires to add `-fsanitize=address` into CFLAGS or CXXFLAGS, we provide a llvm wapper. Take [`df.c`](test/doubleFree/df.c), which contains a simple double-free, as an example.
+AddressSanitizer requires adding `-fsanitize=address` into CFLAGS or CXXFLAGS, we provide a llvm wapper. Take [`df.c`](test/doubleFree/df.c), which contains a simple double-free, as an example.
 
 ```bash
 # setup the environment variables in the root directory of the tool
@@ -121,7 +120,7 @@ $ clang -g -emit-llvm -c ./df.c -o df.bc
 # perform static analysis
 $ $ROOT_DIR/tool/staticAnalysis/staticAnalysis.sh df
 
-# complie the instrumented program with ASAN
+# compile the instrumented program with ASAN
 $ export Con_PATH=$ROOT_DIR/test/doubleFree/ConConfig.df
 $ $ROOT_DIR/tool/staticAnalysis/DBDS-INSTRU/dbds-clang-fast -g -fsanitize=address -c ./df.c -o df.o
 $ clang++ ./df.o $ROOT_DIR/tool/staticAnalysis/DBDS-INSTRU/DBDSFunction.o -g -o df -lpthread -fsanitize=address -ldl
@@ -132,7 +131,7 @@ $ $ROOT_DIR/tool/DBDS/run_PDS.py ./df
 
 #### Reproduce the Interleaving under a Certain Interleaving
 
-After exectue `run_PDS.py`, it first perform dry run. Then we need to press Enter to continue. Finally, the results should look like following.
+After executing `run_PDS.py`, it first performs a dry run. Then we need to press Enter to continue. Finally, the results should look like following.
 
 ```sh
 Start Testing!
@@ -165,7 +164,7 @@ Time    00:00:00.00000          00:00:01.76925
 
 ```
 
-From the result, we have found three interleavings that can lead to errors. The interleaving is saved in the folder `out_df_*`. If you want to reproduce a certain interleaving that saved in the folder `out_df_*`, you can perfrom the following command.
+From the result, we have found three interleavings that can lead to errors. The interleaving is saved in the folder `out_df_*`. If you want to reproduce a certain interleaving that saved in the folder `out_df_*`, you can perform the following command.
 
 ```bash
 $ROOT_DIR/tool/DBDS/run_PDS.py -r out_df_1/Errors/000001 ./df
@@ -224,7 +223,7 @@ $ clang++ -g -emit-llvm -c ./increase_double.cpp -o increase_double.bc
 # perform static analysis
 $ $ROOT_DIR/tool/staticAnalysis/staticAnalysis.sh increase_double
 
-# complie the instrumented program
+# compile the instrumented program
 $ export Con_PATH=$ROOT_DIR/test/increase_double/ConConfig.increase_double
 $ $ROOT_DIR/tool/staticAnalysis/DBDS-INSTRU/dbds-clang-fast++ -g ./increase_double.cpp -o increase_double
 
@@ -239,7 +238,7 @@ Then you will see that we find all ten different results.
 
 [ThreadSanitizer](https://clang.llvm.org/docs/ThreadSanitizer.html) (aka TSan) is a fast data race detector for C/C++ and Go. DBDS can be performed with ThreadSanitizer.
 
-ThreadSanitizer requires to add `-fsanitize=thread -fPIE -pie` into `CFLAGS` or `CXXFLAGS`, we provide a llvm wapper. Take [`increase_double.c`](test/increase_double/increase_double.c), which contains a simple double-free, as an example.
+ThreadSanitizer requires us to add `-fsanitize=thread -fPIE -pie` into `CFLAGS` or `CXXFLAGS`, and we provide a llvm wrapper. Take [`increase_double.c`](test/increase_double/increase_double.c), which contains a simple double-free, as an example.
 
 ```bash
 # setup the environment variables in the root directory of the tool
@@ -253,7 +252,7 @@ $ clang++ -g -emit-llvm -c ./increase_double.cpp -o increase_double.bc
 # perform static analysis
 $ $ROOT_DIR/tool/staticAnalysis/staticAnalysis.sh increase_double
 
-# complie the instrumented program with ASAN
+# compile the instrumented program with ASAN
 $ export Con_PATH=$ROOT_DIR/test/increase_double/ConConfig.increase_double
 $ $ROOT_DIR/tool/staticAnalysis/DBDS-INSTRU/dbds-clang-fast++ -g -fsanitize=thread -fPIE -pie ./increase_double.cpp -o increase_double
 

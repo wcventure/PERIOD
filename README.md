@@ -4,7 +4,7 @@
 
 PERIOD is a controlled concurrency testing tool, where a scheduler explores the space of possible interleavings of a concurrent program looking for bugs.
 
-This repository provides the tool and the evaluation subjects for the paper "Controlled Concurrency Testing via Periodical Scheduling" accepted for the technical track at ICSE'2022. A pre-print of the paper can be found at [ICSE2022_PERIOD.pdf](https://wcventure.github.io/pdf/ICSE2022_PERIOD.pdf).
+This repository provides the tool and the evaluation subjects for the paper "Controlled Concurrency Testing via Periodical Scheduling'' accepted for the technical track at ICSE 2022. A preprint of the paper can be found at [ICSE2022_PERIOD.pdf](https://wcventure.github.io/pdf/ICSE2022_PERIOD.pdf).
 
 **Table of contents**
 - [Directory Structure](#directory-structure)
@@ -17,7 +17,7 @@ This repository provides the tool and the evaluation subjects for the paper "Con
 - [Advance Usage](#advance-usage)
 - [Other Links](#other-links)
   - [Evaluation Dataset](#the-link-of-evaluation-dataset)
-  - [Compared Basedline Tools](#the-link-of-compared-basedline-tools)
+  - [Compared Baseline Tools](#the-link-of-compared-basedline-tools)
   
 ----------
 
@@ -64,7 +64,7 @@ The easiest way to use PERIOD is to use Docker. We strongly recommend installing
 
 - **Running a privileged container**
   - `sudo docker run --privileged -it period:latest /bin/bash`
-  - Then you will start a a docker container abd enter the configured environment of PERIOD.
+  - Then you will start a docker container and enter the configured environment of PERIOD.
 
 ----------
 
@@ -72,7 +72,7 @@ The easiest way to use PERIOD is to use Docker. We strongly recommend installing
 
 Before you use PERIOD, we suggest that you first use those simple examples provided by us to confirm whether the tool can work normally. In the following, we use the examples in the `test` folder to explain how to use the tool.
 
-You can use one of the programs in the `test` folder to check whether PERIOD works normally. Take [`doubleFree`](test/doubleFree/df.c) as a running example. Here let's run it with a prepared script (If you want to try a program outside folder `test` and `evaluation`, please refer to [Advance Usage](AdvancUsage.md).).
+You can use one of the programs in the `test` folder to check whether PERIOD works normally. Take [`doubleFree`](test/doubleFree/df.c) as a running example. Here, let's run it with a prepared script (If you want to try a program outside the folder `test` and `evaluation`, please refer to [Advance Usage](AdvancUsage.md).).
 
 1. Enter the working directory:
     ```sh
@@ -131,16 +131,16 @@ You can use one of the programs in the `test` folder to check whether PERIOD wor
     ```
 
 6. If the above steps can be executed normally, it means that your installation has been successful！You can continue to try other examples in the `test` folder. There are a list of simple examples that are easy to understand in the `test` folder:
-   - [UAF](https://github.com/wcventure/PERIOD/tree/main/test/UAF)
-   - [doubleFree](https://github.com/wcventure/PERIOD/tree/main/test/doubleFree)
-   - [doubleFree2](https://github.com/wcventure/PERIOD/tree/main/test/doubleFree2)
-   - [increase_double](https://github.com/wcventure/PERIOD/tree/main/test/increase_double)
-   - [issue205](https://github.com/wcventure/PERIOD/tree/main/test/issue205)
-   - [lock](https://github.com/wcventure/PERIOD/tree/main/test/lock)
-   - [null_concurrency_race](https://github.com/wcventure/PERIOD/tree/main/test/null_concurrency_race)
-   - [test](https://github.com/wcventure/PERIOD/tree/main/test/test)
-   - [transfer](https://github.com/wcventure/PERIOD/tree/main/test/transfer)
-   - [work](https://github.com/wcventure/PERIOD/tree/main/test/work)
+   - [UAF](test/UAF)
+   - [doubleFree](test/doubleFree)
+   - [doubleFree2](test/doubleFree2)
+   - [increase_double](test/increase_double)
+   - [issue205](test/issue205)
+   - [lock](test/lock)
+   - [null_concurrency_race](test/null_concurrency_race)
+   - [test](test/test)
+   - [transfer](test/transfer)
+   - [work](test/work)
 
 
 ----------
@@ -245,7 +245,7 @@ In `evaluation/ConVul-CVE-Benchmarks` folder, You can run the script `./build_al
 # setup the environment variables in the root directory of the tool
 $ source tool/init_env.sh
 
-# complie all ConVul-CVE-Benchmarks programs 
+# compile all ConVul-CVE-Benchmarks programs 
 $ cd $ROOT_DIR/evaluation/ConVul-CVE-Benchmarks
 $ ./build_all.sh
 ```
@@ -266,19 +266,19 @@ For the test command for each CVE, refers to:
 #### SCTBench
 
 The benchmarks for paper "Concurrency testing using controlled schedulers: An empirical study, TOPC 2016." are available in [this repository](https://github.com/mc-imperial/sctbench). SCTBench collects concurrency bugs from previous parallel workloads (SPLASH2) and concurrency testing/verification works (CB , CHESS, CS and Inspect). For the test command for each benchmark programs, refers to:
-- [CB](https://github.com/wcventure/PERIOD/tree/main/evaluation/CB)
-- [CS](https://github.com/wcventure/PERIOD/tree/main/evaluation/CS)
-- [Chess](https://github.com/wcventure/PERIOD/tree/main/evaluation/Chess)
-- [Inspect](https://github.com/wcventure/PERIOD/tree/main/evaluation/Inspect_benchmarks)
-- [RADBench](https://github.com/wcventure/PERIOD/tree/main/evaluation/RADBench)
-- [SafeStack](https://github.com/wcventure/PERIOD/tree/main/evaluation/SafeStack)
-- [Splash2](https://github.com/wcventure/PERIOD/tree/main/evaluation/Splash2)
+- [CB](evaluation/CB)
+- [CS](evaluation/CS)
+- [Chess](evaluation/Chess)
+- [Inspect](evaluation/Inspect_benchmarks)
+- [RADBench](evaluation/RADBench)
+- [SafeStack](evaluation/SafeStack)
+- [Splash2](evaluation/Splash2)
 
 ----------
 
 ## Advance Usage
 
-If you want to try a program outside folder `test` and `evaluation`, please refer to [Advance Usage](AdvancUsage.md).
+If you want to try a program outside the folder `test` and `evaluation`, please refer to [Advance Usage](AdvancUsage.md).
 
 ----------
 
@@ -317,11 +317,12 @@ We have included all the benchmark programs used in our paper into the docker im
 - STCBench: [https://github.com/mc-imperial/sctbench](https://github.com/mc-imperial/sctbench)
 - CVE benchmark: [https://github.com/mryancai/ConVul](https://github.com/mryancai/ConVul)
 
-### The Link of Compared Basedline Tools
+### The Link of Compared Baseline Tools
 
 We used existing implementations of compared tools when available. Here are their websites to obtain the tool:
 - Maple: https://github.com/jieyu/maple.
 - IPB, IDB, DFS, PCT, Random are optimized and implemented in https://github.com/mc-imperial/sctbench.
-- ConVul can be download on https://sites.google.com/site/detectconvul/.
-- UFO can be download on https://github.com/parasol-aser/UFO.
+- ConVul can be downloaded on https://sites.google.com/site/detectconvul/.
+- UFO can be downloaded on https://github.com/parasol-aser/UFO.
 - Data Race detector: [TSAN](https://github.com/google/sanitizers), [FastTrack](https://github.com/microsoft/FastTrack), [Helgrind+](https://valgrind.org/docs/manual/hg-manual.html).
+

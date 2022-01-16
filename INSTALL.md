@@ -15,7 +15,7 @@ The easiest way to use PERIOD is to use Docker. We strongly recommend installing
 **running a privileged container**
 - `sudo docker run --privileged -it period:latest /bin/bash`
 
-Then you will start a a docker container abd enter the configured environment of PERIOD.
+Then you will start a docker container and enter the configured environment of PERIOD.
 
  
 ## Installing from source code on local environment (for development)
@@ -60,7 +60,7 @@ If you really want to install the tool from source code on your host system, ple
 
 - **Usage**
 	
-	The only difference between "Installing based on docker" is that everytime you open a new terminal you need to set up environment variable.
+	The only difference between "Installing based on docker" is that everytime you open a new terminal you need to set up an environment variable.
 	
 	```
 	# set up environment
