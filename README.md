@@ -1,4 +1,3 @@
-
 # PERIOD: Controlled Concurrency Testing via Periodical Scheduling
 
 [![MIT License](https://img.shields.io/github/license/xiaocong/uiautomator.svg)](http://opensource.org/licenses/MIT)
@@ -7,7 +6,21 @@ PERIOD is a controlled concurrency testing tool, where a scheduler explores the 
 
 This repository provides the tool and the evaluation subjects for the paper "Controlled Concurrency Testing via Periodical Scheduling" accepted for the technical track at ICSE'2022. A pre-print of the paper can be found at [ICSE2022_PERIOD.pdf](https://wcventure.github.io/pdf/ICSE2022_PERIOD.pdf).
 
+**Table of contents**
+- [Directory Structure](#directory-structure)
+- [Tool](#tool)
+  - [Requirements](#requirements)
+  - [Installing](#installing)
+  - [Running on Docker](#running-on-docker)
+- [Test](#test)
+- [Evaluation](#evaluation)
+- [Advance Usage](#advance-usage)
+- [Other Links](#other-links)
+  - [Evaluation Dataset](#the-link-of-evaluation-dataset)
+  - [Compared Basedline Tools](#the-link-of-compared-basedline-tools)
+  
 ----------
+
 
 ## Directory Structure
 
