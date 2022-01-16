@@ -1,3 +1,0 @@
-
-all:
-	cd ..; $(MAKE) tools

@@ -265,12 +265,11 @@ For the test command for each CVE, refers to:
 
 #### SCTBench
 
-The benchmarks for paper "Concurrency testing using controlled schedulers: An empirical study, TOPC 2016." are available in [this repository](https://github.com/mc-imperial/sctbench). SCTBench collects concurrency bugs from previous parallel workloads (PARSEC and SPLASH2) and concurrency testing/verification works (CB , CHESS, CS and Inspect). For the test command for each benchmark programs, refers to:
+The benchmarks for paper "Concurrency testing using controlled schedulers: An empirical study, TOPC 2016." are available in [this repository](https://github.com/mc-imperial/sctbench). SCTBench collects concurrency bugs from previous parallel workloads (SPLASH2) and concurrency testing/verification works (CB , CHESS, CS and Inspect). For the test command for each benchmark programs, refers to:
 - [CB](https://github.com/wcventure/PERIOD/tree/main/evaluation/CB)
 - [CS](https://github.com/wcventure/PERIOD/tree/main/evaluation/CS)
 - [Chess](https://github.com/wcventure/PERIOD/tree/main/evaluation/Chess)
 - [Inspect](https://github.com/wcventure/PERIOD/tree/main/evaluation/Inspect_benchmarks)
-- [Parsec-2.0](https://github.com/wcventure/PERIOD/tree/main/evaluation/Parsec-2.0)
 - [RADBench](https://github.com/wcventure/PERIOD/tree/main/evaluation/RADBench)
 - [SafeStack](https://github.com/wcventure/PERIOD/tree/main/evaluation/SafeStack)
 - [Splash2](https://github.com/wcventure/PERIOD/tree/main/evaluation/Splash2)

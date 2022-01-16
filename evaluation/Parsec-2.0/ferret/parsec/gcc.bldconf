@@ -1,7 +1,0 @@
-#!/bin/bash
-
-# gcc.bldconf - configuration file for PARSEC
-
-# Default parallelization is pthreads
-source ${PARSECDIR}/pkgs/apps/ferret/parsec/gcc-pthreads.bldconf
-

@@ -1,7 +1,0 @@
-@menu
-* Image
-@end menu
-
-@node Image
-@section Image
-
