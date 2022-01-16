@@ -1,72 +1,59 @@
-*(PERIOD is a controlled concurrency testing tool, where a scheduler explores the space of possible interleavings of a concurrent program looking for bugs)*
 
-# Search-Based Concurrency Interleavings Exploration
+# PERIOD: Controlled Concurrency Testing via Periodical Scheduling
 
 [![MIT License](https://img.shields.io/github/license/xiaocong/uiautomator.svg)](http://opensource.org/licenses/MIT)
 
-This is a testing framework for concurency programs.
+PERIOD is a controlled concurrency testing tool, where a scheduler explores the space of possible interleavings of a concurrent program looking for bugs.
 
-<div align=center>
-<figure class="half">
-    <img width=80% src="document/img/framework.png">
-</figure>
-</div>
+This repository provides the tool and the evaluation subjects for the paper "Controlled Concurrency Testing via Periodical Scheduling" accepted for the technical track at ICSE'2022. A pre-print of the paper can be found at [ICSE2022_PERIOD.pdf](https://wcventure.github.io/pdf/ICSE2022_PERIOD.pdf).
 
 ----------
 
-The following pages show the technique report:
-  - [*Technical Report: Exploration-based Active Testing For Concurrency Bugs Detection.*](document/TechnicalReport.md)
+## Directory Structure
 
-The following pages show the implementation details of key techniques:
-  - [*Static analysis to find key points that may cause data race/concurrency bugs.*](tool/staticAnalysis/README.md)
-  - [*Perform Instrumentation based on static analysis.*](tool/staticAnalysis/LLVM-PASS/README.md)
-  - [*Deadline Based Deterministic Scheduling (DBDS) to explore the key points interleavings.*](tool/DBDS/README.md)
-  - [*Accelerate exploration and in-depth exploration.*](tool/DBDS/Strategy.md)
+The repository mainly contains three folders: [*tool*](#tool), [*test*](#test) and [*evaluation*](#evaluation). We briefly introduce each folder under `/workdir/PERIOD` (if you install by using docker, the root folder of the artifact would be `/workdir/PERIOD`):
+- `clang+llvm`: Pre-Built Binaries of LLVM 10.0. These binaries include Clang, LLD, compiler-rt, various LLVM tools, etc.
+- `tools`: Root directory for PERIOD tool and scripts.
+  - `DBDS`: The code about our proposed periodical scheduling method that can systematically explore the thread interleaving.
+  - `staticanalysis`: The scripts of static analysis, which aim to find key points that used to be scheduled during testing. It also contains the codes about instrumentation.
+  - `SVF`: Third-party libraries project SVF, which provides interprocedural dependence analysis for LLVM-based languages. SVF is able to perform pointer alias analysis, memory SSA form construction, value-flow tracking for program variables. 
+  - `wllvm`: Third-party libraries project WLLVM, which provides tools for building whole-program (or whole-library) LLVM bitcode files from an unmodified C or C++ source package.
+- `test`: Some simple examples that are easy to understand. These examples could also be used to check the installation.
+- `evaluation`: Root for benchmark directories. The ConVul-CVE-Benchmarks correspond to the 10 programs used in Table. 1 in our paper. Other folders contain the 36 programs used in Table. 2 in our paper. We provide scripts for each program for easy installation.
+  - `ConVul-CVE-Benchmarks`: 10 programs correspond to a real-world CVE.
+  - `CB`: Test cases for real applications.
+  - `CS`: Small test cases and some small programs.
+  - `Chess`: Test cases for several versions of a work-stealing queue.
+  - `Inspect_benchmarks`: Small test cases and some small programs.
+  - `RADBench`: Tests cases for real applications.
+  - `SafeStack`: Test case for lock-free stack and a debugging library test case.
+  - `Splash2`: Parallel workloads.
 
 ----------
-
-The repository contains three folders: [*tool*](#tool), [*test*](#test) and [*evaluation*](#evaluation).
 
 ## Tool
 
-We provide here a snapshot of ConFuzz. For simplicity, we provide shell script for the whole installation. Here, We recommend installing and running the tool under a Docker container. If you really want to install the tool in your developer environment, please see [INSTALL.md](tool/INSTALL.md)
+The easiest way to use PERIOD is to use Docker. We strongly recommend installing and running our tool based on Docker. If you really want to install the tool in your host system, please see [INSTALL.md](tool/INSTALL.md) for more detail.
 
-#### Requirements
+### Requirements
 
-- Operating System: Ubuntu 18.04 LTS (*This is very important, as our implementation requires higher kernel version*)
-- Run the following command to install Docker (*Docker version higher than 18.09.7*):
-  ```sh
-  $ sudo apt-get install docker.io
-  ```
-  (If you have any questions on docker, you can see [Docker's Documentation](https://docs.docker.com/install/linux/docker-ce/ubuntu/)).
+- **Hardware Requirements:** Please use workstations/PC with multi-core processors, as PERIOD is a concurrency testing tool
+- **Operating System:** >= Ubuntu 18.04 LTS (Requires kernel version >= 4.x due to the scheduling policy)
+- **Docker**: The only requirement is to install Docker (version higher than 18.09.7). You can use the command `sudo apt-get install docker.io` to install the docker on your Linux machine. (If you have any questions on docker, you can see [Docker's Documentation](https://docs.docker.com/engine/install/ubuntu/)).
 
-#### Clone the Repository
+### Installing
 
-```sh
-$ git clone https://github.com/wcventure/ConcurrencyFuzzer.git ConFuzz --depth=1
-$ cd ConFuzz
-```
+- **Add `period:latest` image on your system**. There are two ways of doing this:
+  - `docker pull https://hub.docker.com/r/wcventure/period:master && docker tag https://hub.docker.com/r/wcventure/period:master period:latest`
+  - Alternatively, you can build your own image with `sudo docker build -t period:latest --no-cache ./`
 
-#### Build and Run the Docker Image
+### Running on Docker
 
-Firstly, system core dumps must be disabled as with AFL (you can skip this step sometimes. Keep going).
+- **Running a privileged container**
+  - `sudo docker run --privileged -it period:latest /bin/bash`
+  - Then you will start a a docker container abd enter the configured environment of PERIOD.
 
-```sh
-$ echo core|sudo tee /proc/sys/kernel/core_pattern
-$ echo performance|sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
-```
-
-Run the following command to automatically build the docker image and configure the environment.
-
-```sh
-# build docker image
-$ sudo docker build -t confuzzer --no-cache ./
-
-# run docker image
-$ sudo docker run --privileged -it confuzzer /bin/bash
-```
-
-If you want to build local souce, please read the instruction in Dockerfile.
+----------
 
 ## Test
 
@@ -235,6 +222,8 @@ $ $ROOT_DIR/tool/staticAnalysis/DBDS-INSTRU/dbds-clang-fast++ -g -fsanitize=thre
 $ $ROOT_DIR/tool/DBDS/run_PDS.py ./increase_double
 ```
 
+----------
+
 ## Evaluation
 
 The folder  evaluation contains all our evaluation subjects. After having the tool installed, you can run the script to build and instrument the subjects. After instrument the subjects you can run the script to perform testing on the subjects.
@@ -288,8 +277,40 @@ For the test command for each CVE, refers to:
 - CVE-2017-6346 program contains UAF, DF and NDP bug.
 
 
-## Links
+## Advance Usage
 
-Website: https://sites.google.com/view/ConcurrencyFuzzer
 
-GitHub: https://github.com/wcventure/ConcurrencyFuzzer
+## Publications
+
+Note that the DATA and CODE are free for Research and Education Use ONLY. 
+Please cite our paper (add the bibtex below) if you use any part of our ALGORITHM, CODE, DATA or RESULTS in any publication.
+
+```
+@inproceedings{wen2022period,
+author = {Wen, Cheng and He, Mengda and Wu, Bohao and Xu, Zhiwu and Qin, Shengchao},
+title = {Controlled Concurrency Testing via Periodical Scheduling},
+year = {2022},
+isbn = {9781450392211},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3510003.3510178},
+doi = {10.1145/3510003.3510178},
+booktitle = {Proceedings of the ACM/IEEE 4th International Conference on Software Engineering},
+keywords = {software vulnerability, memory consumption, fuzz testing},
+location = {Pittsburgh, USA},
+series = {ICSE '22}
+}
+
+```
+
+## Other Links
+
+### The Link of Evaluation Dataset
+
+We have included all the benchmark programs used in our paper into the docker image, with our scripts for easy configuration.
+
+If you need the original dataset, it could be download from
+- STCBench: [https://github.com/mc-imperial/sctbench](https://github.com/mc-imperial/sctbench)
+- CVE benchmark: [https://github.com/mryancai/ConVul](https://github.com/mryancai/ConVul)
+
+### The Link of Compared Basedline Tools
