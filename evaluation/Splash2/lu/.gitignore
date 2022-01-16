@@ -1,5 +1,5 @@
-LU.t
-lu.c.t
+LU
+lu.c
 *.bc
 *.bc.r
 ConConfig.*
