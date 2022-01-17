@@ -66,3 +66,7 @@ If you really want to install the tool from source code on your host system, ple
 	# set up environment
     source tool/init_env.sh
 	```
+
+# Test
+
+Before you use PERIOD, we suggest that you first use those simple examples provided by us to confirm whether the tool can work normally. Please refer to [PERIOD#Test](https://github.com/wcventure/PERIOD#test) for more detail.
