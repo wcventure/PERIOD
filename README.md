@@ -72,7 +72,7 @@ The easiest way to use PERIOD is to use Docker. We strongly recommend installing
 
 Before you use PERIOD, we suggest that you first use those simple examples provided by us to confirm whether the tool can work normally. In the following, we use the examples in the `test` folder to explain how to use the tool.
 
-You can use one of the programs in the `test` folder to check whether PERIOD works normally. Take [`doubleFree`](test/doubleFree/df.c) as a running example. Here, let's run it with a prepared script (If you want to try a program outside the folder `test` and `evaluation`, please refer to [Advance Usage](AdvancUsage.md).).
+You can use one of the programs in the `test` folder to check whether PERIOD works normally. Take [`doubleFree`](test/doubleFree/df.c) as a running example. Here, let's run it with a prepared script (If you want to try a program outside the folder `test` and `evaluation`, please refer to [Advance Usage](AdvanceUsage.md).).
 
 1. Enter the working directory:
     ```sh
@@ -278,7 +278,7 @@ The benchmarks for paper "Concurrency testing using controlled schedulers: An em
 
 ## Advance Usage
 
-If you want to try a program outside the folder `test` and `evaluation`, please refer to [Advance Usage](AdvancUsage.md).
+If you want to try a program outside the folder `test` and `evaluation`, please refer to [Advance Usage](AdvanceUsage.md).
 
 ----------
 
