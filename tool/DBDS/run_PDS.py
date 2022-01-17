@@ -388,6 +388,12 @@ kpOrderArray = (c_uint16*SHARE_ARRAY_SIZE)(0)
 
 get_info_from_share_memory(P,A,B,T,kpNumArray,None,None,None)
 Period = P.value
+if Period < 1000:
+    memmove(ADDR, byref(c_ulonglong(int(Period*10))), sizeof(c_ulonglong))
+    Period = Period*10
+else if Period < 100
+    memmove(ADDR, byref(c_ulonglong(int(Period*100))), sizeof(c_ulonglong))
+    Period = Period*100
 N = A.value
 if N > SHARE_THREAD_NUM:
     print("Too many threads...")

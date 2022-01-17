@@ -97,7 +97,7 @@ $ROOT_DIR/tool/DBDS/run_PDS.py -r out_work_1/Errors/000001_0000003_memory-leaks 
 
 As described above, use the command like the following to reproduce the double-free:
 ```
-$ROOT_DIR/tool/DBDS/run_PDS.py -r out_work_1/Errors/000004_0000010_double-free ./work
+$ROOT_DIR/tool/DBDS/run_PDS.py -r out_work_1/Errors/00000*_0000011_double-free ./work
 ```
 
 -------------------
@@ -135,104 +135,39 @@ After executing `run_PDS.py`, it first performs a dry run. Then we need to press
 
 ```sh
 Start Testing!
-test 0001: [0, 0, 1, 1]
-test 0002: [0, 1, 0, 1]
-        [Error Found]: NO.1 double-free
-        The interleavings saved in out_df_1/Errors/000001
-test 0003: [0, 1, 1, 0]
-        [Error Found]: NO.2 double-free
-        The interleavings saved in out_df_1/Errors/000002
-test 0004: [1, 0, 0, 1]
-        [Error Found]: NO.3 double-free
-        The interleavings saved in out_df_1/Errors/000003
-test 0005: [1, 0, 1, 0]
-        [Error Found]: NO.4 double-free
-        The interleavings saved in out_df_1/Errors/000004
-test 0006: [1, 1, 0, 0]
+Targeting bugs that bug depth = 1 . Iterate for 2 periods
+test 0001: [[0, 0], [1, 1]]
+test 0002: [[1, 1], [0, 0]]
+Targeting bugs that bug depth = 2 . Iterate for 3 periods
+test 0003: [[0], [1, 1], [0]]
+    [Error Found]: NO.1 double-free
+    The interleavings saved in out_df_1/Errors/000001_0000003_double-free 
+test 0004: [[1], [0, 0], [1]]
+    [Error Found]: NO.2 double-free
+    The interleavings saved in out_df_1/Errors/000002_0000004_double-free 
 End Testing!
-
-
-Total Error Interleavings: 4
-Total Timeouts Interleavings: 0
-2 status found:
-         [0, -6]
-0 results found:
---------------------------------------------------
-        Last New Find           Total
-Round   0                       6
-Time    00:00:00.00000          00:00:01.76925
-
 ```
 
 From the result, we have found three interleavings that can lead to errors. The interleaving is saved in the folder `out_df_*`. If you want to reproduce a certain interleaving that saved in the folder `out_df_*`, you can perform the following command.
 
 ```bash
-$ROOT_DIR/tool/DBDS/run_PDS.py -r out_df_1/Errors/000001 ./df
+$ROOT_DIR/tool/DBDS/run_PDS.py -r out_df_1/Errors/000001_0000003_double-free ./df
 ```
 
-This command will execute the target program with interleaving `[0, 0, 1, 1]`. Actually, it can trigger a double-free bug.
+This command will execute the target program with interleaving `[[0], [1, 1], [0]]`. Actually, it can trigger a double-free bug.
 
 ```sh
 =================================================================
-==67534==ERROR: AddressSanitizer: attempting double-free on 0x602000000010 in thread T2:
-    #0 0x4936fd  (/ConFuzz/test/doubleFree/df+0x4936fd)
-    #1 0x4c5aa1  (/ConFuzz/test/doubleFree/df+0x4c5aa1)
-    #2 0x7f586093e6b9  (/lib/x86_64-linux-gnu/libpthread.so.0+0x76b9)
-    #3 0x7f585f9c74dc  (/lib/x86_64-linux-gnu/libc.so.6+0x1074dc)
-
-0x602000000010 is located 0 bytes inside of 7-byte region [0x602000000010,0x602000000017)
-freed by thread T1 here:
-    #0 0x4936fd  (/ConFuzz/test/doubleFree/df+0x4936fd)
-    #1 0x4c5a01  (/ConFuzz/test/doubleFree/df+0x4c5a01)
-
-previously allocated by thread T0 here:
-    #0 0x49397d  (/ConFuzz/test/doubleFree/df+0x49397d)
-    #1 0x4c5baf  (/ConFuzz/test/doubleFree/df+0x4c5baf)
-    #2 0x7f585f8e083f  (/lib/x86_64-linux-gnu/libc.so.6+0x2083f)
-
-Thread T2 created by T0 here:
-    #0 0x47e10a  (/ConFuzz/test/doubleFree/df+0x47e10a)
-    #1 0x4c5c39  (/ConFuzz/test/doubleFree/df+0x4c5c39)
-    #2 0x7f585f8e083f  (/lib/x86_64-linux-gnu/libc.so.6+0x2083f)
+==1081==ERROR: AddressSanitizer: attempting double-free on 0x602000000010 in thread T2:
 NULL 1
-
-Thread T1 created by T0 here:
-    #0 0x47e10a  (/ConFuzz/test/doubleFree/df+0x47e10a)
-    #1 0x4c5c16  (/ConFuzz/test/doubleFree/df+0x4c5c16)
-    #2 0x7f585f8e083f  (/lib/x86_64-linux-gnu/libc.so.6+0x2083f)
-
-SUMMARY: AddressSanitizer: double-free (/ConFuzz/test/doubleFree/df+0x4936fd)
-==67534==ABORTING
+    #0 0x4941dd  (/workdir/PERIOD/test/doubleFree/df+0x4941dd)
+    #1 0x4c65b1  (/workdir/PERIOD/test/doubleFree/df+0x4c65b1)
+    #2 0x7f6ba44b26da  (/lib/x86_64-linux-gnu/libpthread.so.0+0x76da)
+    #3 0x7f6ba349071e  (/lib/x86_64-linux-gnu/libc.so.6+0x12171e)
+...
+SUMMARY: AddressSanitizer: double-free (/workdir/PERIOD/test/doubleFree/df+0x4941dd) 
+==1081==ABORTING
 ```
-
-#### Test without AddressSanitizer
-
-Before you use the tool, we suggest that you first use a simple example ([`increase_double.c`](test/increase_double/increase_double.c)) provided by us to determine whether the tool can work normally.
-
-Please try to perform following command:
-
-```bash
-# setup the environment variables in the root directory of the tool
-$ source tool/init_env.sh
-
-# compile the program and get bit code
-$ cd $ROOT_DIR/test/increase_double
-$ ./cleanDIR.sh
-$ clang++ -g -emit-llvm -c ./increase_double.cpp -o increase_double.bc
-
-# perform static analysis
-$ $ROOT_DIR/tool/staticAnalysis/staticAnalysis.sh increase_double
-
-# compile the instrumented program
-$ export Con_PATH=$ROOT_DIR/test/increase_double/ConConfig.increase_double
-$ $ROOT_DIR/tool/staticAnalysis/DBDS-INSTRU/dbds-clang-fast++ -g ./increase_double.cpp -o increase_double
-
-# perform PDS
-$ $ROOT_DIR/tool/DBDS/run_PDS.py ./increase_double
-```
-
-Then you will see that we find all ten different results.
-
 
 #### Test with ThreadSanitizer
 
