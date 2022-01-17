@@ -7,24 +7,28 @@ PERIOD is a controlled concurrency testing tool, where a scheduler explores the 
 This repository provides the tool and the evaluation subjects for the paper "Controlled Concurrency Testing via Periodical Scheduling'' accepted for the technical track at ICSE 2022. A preprint of the paper can be found at [ICSE2022_PERIOD.pdf](https://wcventure.github.io/pdf/ICSE2022_PERIOD.pdf).
 
 **Table of contents**
-- [Directory Structure](#directory-structure)
-- [Tool](#tool)
-  - [Requirements](#requirements)
-  - [Installing](#installing)
-  - [Running on Docker](#running-on-docker)
-- [Test](#test)
-- [Evaluation](#evaluation)
-- [Advance Usage](#advance-usage)
-- [Other Links](#other-links)
-  - [Evaluation Dataset](#the-link-of-evaluation-dataset)
-  - [Compared Baseline Tools](#the-link-of-compared-basedline-tools)
+- [PERIOD: Controlled Concurrency Testing via Periodical Scheduling](#period-controlled-concurrency-testing-via-periodical-scheduling)
+  - [Directory Structure](#directory-structure)
+  - [Tool](#tool)
+    - [Requirements](#requirements)
+    - [Installing](#installing)
+    - [Running on Docker](#running-on-docker)
+  - [Test](#test)
+  - [Evaluation](#evaluation)
+      - [CVE Benchmarks](#cve-benchmarks)
+      - [SCTBench](#sctbench)
+  - [Advance Usage](#advance-usage)
+  - [Publications](#publications)
+  - [Other Links](#other-links)
+    - [The Link of Evaluation Dataset](#the-link-of-evaluation-dataset)
+    - [The Link of Compared Baseline Tools](#the-link-of-compared-baseline-tools)
   
 ----------
 
 
 ## Directory Structure
 
-The repository mainly contains three folders: [*tool*](#tool), [*test*](#test) and [*evaluation*](#evaluation). We briefly introduce each folder under `/workdir/PERIOD` (if you install by using docker, the root folder of the artifact would be `/workdir/PERIOD`):
+The repository mainly contains three folders: [*tool*](#tool), [*test*](#test) and [*evaluation*](#evaluation). We briefly introduce each folder under `${ROOT_DIR}` (if you install by using docker, the root folder of the artifact would be `/workdir/PERIOD`):
 - `clang+llvm`: Pre-Built Binaries of LLVM 10.0. These binaries include Clang, LLD, compiler-rt, various LLVM tools, etc.
 - `tools`: Root directory for PERIOD tool and scripts.
   - `DBDS`: The code about our proposed periodical scheduling method that can systematically explore the thread interleaving.
@@ -76,7 +80,7 @@ You can use one of the programs in the `test` folder to check whether PERIOD wor
 
 1. Enter the working directory:
     ```sh
-    cd /workdir/PERIOD/test/doubleFree
+    cd ${ROOT_DIR}/test/doubleFree
     ```
 
 2. Use the following script to build the program:
@@ -153,7 +157,7 @@ The fold evaluation contains all our evaluation subjects. After having PERIOD in
 We take the `CVE-2016-7911` in CVE-Benchmark as an example here.
 1. Build Benchmark Program
 ```sh
-cd /workdir/PERIOD/evaluation/ConVul-CVE-Benchmarks/CVE-2016-7911
+cd ${ROOT_DIR}/evaluation/ConVul-CVE-Benchmarks/CVE-2016-7911
 ./cleanDIR.sh
 ./build.sh
 ```
