@@ -28,7 +28,7 @@ This repository provides the tool and the evaluation subjects for the paper "Con
 
 ## Directory Structure
 
-The repository mainly contains three folders: [*tool*](#tool), [*test*](#test) and [*evaluation*](#evaluation). We briefly introduce each folder under `${ROOT_DIR}` (if you install by using docker, the root folder of the artifact would be `/workdir/PERIOD`):
+The repository mainly contains three folders: [*tool*](#tool), [*test*](#test) and [*evaluation*](#evaluation). We briefly introduce each folder under `${ROOT_DIR}` (if you install by using docker, the root folder of the artifact would be `${ROOT_DIR}`):
 - `clang+llvm`: Pre-Built Binaries of LLVM 10.0. These binaries include Clang, LLD, compiler-rt, various LLVM tools, etc.
 - `tools`: Root directory for PERIOD tool and scripts.
   - `DBDS`: The code about our proposed periodical scheduling method that can systematically explore the thread interleaving.
@@ -48,9 +48,11 @@ The repository mainly contains three folders: [*tool*](#tool), [*test*](#test) a
 
 ----------
 
+
 ## Tool
 
 The easiest way to use PERIOD is to use Docker. We strongly recommend installing and running our tool based on Docker. If you really want to install the tool in your host system, please see [INSTALL.md](tool/INSTALL.md) for more detail.
+
 
 ### Requirements
 
@@ -58,11 +60,13 @@ The easiest way to use PERIOD is to use Docker. We strongly recommend installing
 - **Operating System:** >= Ubuntu 18.04 LTS (Requires kernel version >= 4.x due to the scheduling policy)
 - **Docker**: The only requirement is to install Docker (version higher than 18.09.7). You can use the command `sudo apt-get install docker.io` to install the docker on your Linux machine. (If you have any questions on docker, you can see [Docker's Documentation](https://docs.docker.com/engine/install/ubuntu/)).
 
+
 ### Installing
 
 - **Add `period:latest` image on your system**. There are two ways of doing this:
   - `docker pull wcventure/period:stable && docker tag wcventure/period:stable period:latest`
   - Alternatively, you can build your own image with `sudo docker build -t period:latest --no-cache ./`
+
 
 ### Running on Docker
 
@@ -72,11 +76,12 @@ The easiest way to use PERIOD is to use Docker. We strongly recommend installing
 
 ----------
 
+
 ## Test
 
 Before you use PERIOD, we suggest that you first use those simple examples provided by us to confirm whether the tool can work normally. In the following, we use the examples in the `test` folder to explain how to use the tool.
 
-You can use one of the programs in the `test` folder to check whether PERIOD works normally. Take [`doubleFree`](test/doubleFree/df.c) as a running example. Here, let's run it with a prepared script (If you want to try a program outside the folder `test` and `evaluation`, please refer to [Advance Usage](AdvanceUsage.md).).
+You can use one of the programs in the `test` folder to check whether PERIOD works normally. Take [test/doubleFree/df.c](test/doubleFree/df.c) as a running example. Here, let's run it with a prepared script (If you want to try a program outside the folder `test` and `evaluation`, please refer to [Advance Usage](AdvanceUsage.md).).
 
 1. Enter the working directory:
     ```sh
@@ -88,12 +93,12 @@ You can use one of the programs in the `test` folder to check whether PERIOD wor
    ./cleanDIR.sh && ./build.sh
    ```
 
-3. Perform systematic controlled concurrency testing based on periodical scheduling:
+3. Perform systematic controlled concurrency testing based on periodical scheduling (`-y` option means that find bugs with depth 3 and `-y` option means automatic press Enter):
     ```sh
     $ROOT_DIR/tool/DBDS/run_PDS.py -y -d 3 ./df
     ```
 
-4. If PERIOD works normally, you can see the following outputs, which indicate that PERIOD reports 2 buggy interleavings in this program (i.e., double free bugs):
+4. If PERIOD works normally, you can see the following outputs, which indicate that PERIOD reports 4 buggy interleavings in this program (i.e., double free bugs):
     ```sh
     Start Testing!
     Targeting bugs that bug depth = 1 . Iterate for 2 periods
@@ -116,12 +121,14 @@ You can use one of the programs in the `test` folder to check whether PERIOD wor
     End Testing!
     ```
 
-5. After the testing terminates, you can find the folder out_work_1, which saves the buggy schedule that could deterministically reproduce the bugs. 
-    - Use the command like the following to reproduce the double free:
+<u>From the output we can see that the number of schedules that were explored up to and including the detection of a bug for the first time is 3. The total number of schedules explored by a PERIOD are 6, and the number of explored schedules that exhibited the bug are 4. This can easily allow you to repeat the data in Tables 1 and 2 of our paper.</u>
+   
+Note that after the testing terminates, you can find the folder `out_work_1`, which saves the buggy schedule that could deterministically reproduce the bugs. 
+  - Use the command like the following to reproduce the double free:
     ```sh
     $ROOT_DIR/tool/DBDS/run_PDS.py -r out_df_1/Errors/000001_0000003_double-free ./df
     ```
-    And you will see the double free reported by ASAN:
+  - And you will see the double free reported by ASAN:
     ```sh
     ==6742==ERROR: AddressSanitizer: attempting double-free on 0x602000000010 in thread T2:
     NULL 1
@@ -134,7 +141,7 @@ You can use one of the programs in the `test` folder to check whether PERIOD wor
     ==6742==ABORTING
     ```
 
-6. If the above steps can be executed normally, it means that your installation has been successful！You can continue to try other examples in the `test` folder. There are a list of simple examples that are easy to understand in the `test` folder:
+If all above steps can be executed normally, it means that your installation has been successful！You can continue to try other examples in the `test` folder. There are a list of simple examples that are easy to understand in the `test` folder:
    - [UAF](test/UAF)
    - [doubleFree](test/doubleFree)
    - [doubleFree2](test/doubleFree2)
@@ -145,7 +152,6 @@ You can use one of the programs in the `test` folder to check whether PERIOD wor
    - [test](test/test)
    - [transfer](test/transfer)
    - [work](test/work)
-
 
 ----------
 
@@ -239,6 +245,9 @@ Thread T1 created by T0 here:
 ==1592==ABORTING
 ```
 
+<u>The number of schedules that were explored up to and including the detection of a bug for the first time is 19. The total number of schedules explored by a PERIOD are 6, and the number of explored schedules that exhibited the bug are 8. This can easily allow you to repeat the data in Tables 1 and 2 of our paper.</u>
+
+
 #### CVE Benchmarks
 
 The benchmarks for paper "Detecting Concurrency Memory Corruption Vulnerabilities, ESEC/FSE 2019." are available in [this repository](https://github.com/mryancai/ConVul). It contains a set of concurrency vulnerabilities, including: UAF (Use After Free), NPD (Null Pointer Dereference), and DF (Double Free).
@@ -329,4 +338,3 @@ We used existing implementations of compared tools when available. Here are thei
 - ConVul can be downloaded on https://sites.google.com/site/detectconvul/.
 - UFO can be downloaded on https://github.com/parasol-aser/UFO.
 - Data Race detector: [TSAN](https://github.com/google/sanitizers), [FastTrack](https://github.com/microsoft/FastTrack), [Helgrind+](https://valgrind.org/docs/manual/hg-manual.html).
-
