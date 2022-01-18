@@ -121,7 +121,7 @@ You can use one of the programs in the `test` folder to check whether PERIOD wor
     End Testing!
     ```
 
-<u>From the output we can see that the number of schedules that were explored up to and including the detection of a bug for the first time is 3. The total number of schedules explored by a PERIOD are 6, and the number of explored schedules that exhibited the bug are 4. This can easily allow you to repeat the data in Tables 1 and 2 of our paper.</u>
+***From the output we can see that the number of schedules that were explored up to and including the detection of a bug for the first time is 3. The total number of schedules explored by a PERIOD are 6, and the number of explored schedules that exhibited the bug are 4. This can easily allow you to repeat the data in Tables 1 and 2 of our paper.***
    
 Note that after the testing terminates, you can find the folder `out_work_1`, which saves the buggy schedule that could deterministically reproduce the bugs. 
   - Use the command like the following to reproduce the double free:
@@ -245,7 +245,7 @@ Thread T1 created by T0 here:
 ==1592==ABORTING
 ```
 
-<u>The number of schedules that were explored up to and including the detection of a bug for the first time is 19. The total number of schedules explored by a PERIOD are 6, and the number of explored schedules that exhibited the bug are 8. This can easily allow you to repeat the data in Tables 1 and 2 of our paper.</u>
+***The number of schedules that were explored up to and including the detection of a bug for the first time is 19. The total number of schedules explored by a PERIOD are 6, and the number of explored schedules that exhibited the bug are 8. This can easily allow you to repeat the data in Tables 1 and 2 of our paper.***
 
 
 #### CVE Benchmarks
