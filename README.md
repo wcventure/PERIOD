@@ -93,7 +93,7 @@ You can use one of the programs in the `test` folder to check whether PERIOD wor
    ./cleanDIR.sh && ./build.sh
    ```
 
-3. Perform systematic controlled concurrency testing based on periodical scheduling (`-y` option means that find bugs with depth 3 and `-y` option means automatic press Enter):
+3. Perform systematic controlled concurrency testing based on periodical scheduling (`-d 3` option means that find bugs with depth 3 and `-y` option means automatic press Enter):
     ```sh
     $ROOT_DIR/tool/DBDS/run_PDS.py -y -d 3 ./df
     ```
