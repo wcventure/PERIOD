@@ -17,7 +17,7 @@ This repository provides the tool and the evaluation subjects for the paper "Con
   - [Evaluation](#evaluation)
       - [CVE Benchmarks](#cve-benchmarks)
       - [SCTBench](#sctbench)
-  - [Advance Usage](#advance-usage)
+  - [Advanced Usage](#advanced-usage)
   - [Publications](#publications)
   - [Other Links](#other-links)
     - [The Link of Evaluation Dataset](#the-link-of-evaluation-dataset)
@@ -291,9 +291,9 @@ The benchmarks for paper "Concurrency testing using controlled schedulers: An em
 
 ----------
 
-## Advance Usage
+## Advanced Usage
 
-If you want to try a program outside the folder `test` and `evaluation`, please refer to [Advance Usage](AdvanceUsage.md).
+If you want to try a program outside the folder `test` and `evaluation`, please refer to [AdvancedUsage.md](AdvancedUsage.md).
 
 ----------
 
