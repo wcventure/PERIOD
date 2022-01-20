@@ -121,7 +121,7 @@ You can use one of the programs in the `test` folder to check whether PERIOD wor
     End Testing!
     ```
 	
-***The output shows that PERIOD has tested 6 schedules (a schedule is a series of execution phases that contains thread identifiers. '0' represents one thread that is executed across one key point. '1' represents another thread that is executed across one key point), and found 4 buggy interleavings related to double free.***
+***The output shows that PERIOD has tested 6 schedules and found 4 buggy interleavings of double-free. Taking the fourth schedule `[[1], [0, 0], [1]]` as an example, the first [1] means thread 1 gets to execution one key point in the first period; then [0, 0] means thread 0 executes two key points in the second period; at last, thread 1 can take another step.***
 
 ***From the output we can see that the number of schedules that were explored up to and including the detection of a bug for the first time is 3. The total number of schedules explored by a PERIOD are 6, and the number of explored schedules that exhibited the bug are 4. This can easily allow you to repeat the data in Tables 1 and 2 of our paper.***
    
