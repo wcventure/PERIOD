@@ -1,4 +1,4 @@
-# Advance Usage (Run PERIOD step by step)
+# Advanced Usage (Run PERIOD step by step)
 
 Previously, we recommended using the script `./build` we provided to build the benchmark programs. Here, we introduce how to use PERIOD for general programs. We use an example to quickly show you how to use PERIOD to test a given concurrent program. Consider the following multithreaded program (the code can be found in `test/work`).
 
