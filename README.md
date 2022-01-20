@@ -120,6 +120,8 @@ You can use one of the programs in the `test` folder to check whether PERIOD wor
             The interleavings saved in out_df_1/Errors/000004_0000006_double-free
     End Testing!
     ```
+	
+***The output shows that PERIOD has tested 6 schedules (a schedule is a series of execution phases that contains thread identifiers. '0' represents one thread that is executed across one key point. '1' represents another thread that is executed across one key point), and found 4 buggy interleavings related to double free.***
 
 ***From the output we can see that the number of schedules that were explored up to and including the detection of a bug for the first time is 3. The total number of schedules explored by a PERIOD are 6, and the number of explored schedules that exhibited the bug are 4. This can easily allow you to repeat the data in Tables 1 and 2 of our paper.***
    
@@ -221,6 +223,8 @@ Total Error Interleavings: 8
 Total Timeouts Interleavings: 0
 ```
 
+***The number of schedules that were explored up to and including the detection of a bug for the first time is 19. The total number of schedules explored by a PERIOD are 6, and the number of explored schedules that exhibited the bug are 8. This can easily allow you to repeat the data in Tables 1 and 2 of our paper.***
+
 4. Deterministically Reproduce the Bug
 ```sh
 $ROOT_DIR/tool/DBDS/run_PDS.py -r out_2016-7911_1/Errors/000001_0000003_SEGV ./2016-7911
@@ -244,8 +248,6 @@ Thread T1 created by T0 here:
 
 ==1592==ABORTING
 ```
-
-***The number of schedules that were explored up to and including the detection of a bug for the first time is 19. The total number of schedules explored by a PERIOD are 6, and the number of explored schedules that exhibited the bug are 8. This can easily allow you to repeat the data in Tables 1 and 2 of our paper.***
 
 
 #### CVE Benchmarks
