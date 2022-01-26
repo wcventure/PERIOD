@@ -1,7 +1,7 @@
 ### Apply for the Reusable and Available Badges 
  
 We are applying for the *Available* and *Reusable* *badges* for the following reasons.
-- We have made our prototype tool available via Zenodo (with a unique and persistent DOI), a publicly accessible archival repository. (*Available badge*)
+- We have made our prototype tool available via Zenodo (with a unique and persistent DOI: https://doi.org/10.5281/zenodo.5905744), a publicly accessible archival repository. (*Available badge*)
 - We have provided two different ways to build and run our artifact (*Available badge*):
     - (i) We provided a pre-built docker image (compressed size: 1.56 GB) that contains our prototype tool, all the benchmark programs, and our scripts, which should work out-of-the-box. We also provided the `dockerfile`, thus you can automatically build our tool through `docker build` if you fail to download the pre-built Docker image.
     - (ii) We provided instructions to build our prototype tool on your host system, step by step. This makes it convenient for secondary development.

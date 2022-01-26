@@ -1,5 +1,6 @@
 # PERIOD: Controlled Concurrency Testing via Periodical Scheduling
 
+[![DOI](https://zenodo.org/badge/447953443.svg)](https://zenodo.org/badge/latestdoi/447953443)
 [![MIT License](https://img.shields.io/github/license/xiaocong/uiautomator.svg)](http://opensource.org/licenses/MIT)
 
 PERIOD is a controlled concurrency testing tool, where a scheduler explores the space of possible interleavings of a concurrent program looking for bugs.
