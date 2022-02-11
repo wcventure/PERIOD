@@ -82,7 +82,7 @@ $ROOT_DIR/tool/staticAnalysis/DBDS-INSTRU/dbds-clang-fast++ -g -O0 -fno-omit-fra
 ```
 
 **Expose the bug through PERIOD's systematic testing.**
-execute the script `$ROOT_DIR/tool/DBDS/run_PDS.py` for PERIOD's controlled concurrency testing:
+execute the script `$ROOT_DIR/tool/DBDS/run_PDS.py` for PERIOD's controlled concurrency testing (`-d 3` option means that find bugs with depth 3 and `-l` option means enabling LeakSanitizer):
 ```sh
 $ROOT_DIR/tool/DBDS/run_PDS.py -d 3 -l ./work
 ```
