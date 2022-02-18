@@ -122,11 +122,12 @@ You can use one of the programs in the `test` folder to check whether PERIOD wor
     End Testing!
     ```
 	
-***The output shows that PERIOD has tested 6 schedules and found 4 buggy interleavings of double-free. Taking the fourth schedule `[[1], [0, 0], [1]]` as an example, the first [1] means thread 1 gets to execution one key point in the first period; then [0, 0] means thread 0 executes two key points in the second period; at last, thread 1 can take another step.***
+    The output shows that PERIOD has tested 6 schedules and found 4 buggy interleavings of double-free. Taking the fourth schedule `[[1], [0, 0], [1]]` as an example, the first [1] means thread 1 gets to execution one key point in the first period; then [0, 0] means thread 0 executes two key points in the second period; at last, thread 1 can take another step.
 
-***From the output we can see that the number of schedules that were explored up to and including the detection of a bug for the first time is 3. The total number of schedules explored by a PERIOD are 6, and the number of explored schedules that exhibited the bug are 4. This can easily allow you to repeat the data in Tables 1 and 2 of our paper.***
+    From the output we can see that the number of schedules that were explored up to and including the detection of a bug for the first time is 3. The total number of schedules explored by a PERIOD are 6, and the number of explored schedules that exhibited the bug are 4. This can easily allow you to repeat the data in Tables 1 and 2 of our paper.
    
-Note that after the testing terminates, you can find the folder `out_work_1`, which saves the buggy schedule that could deterministically reproduce the bugs. 
+    Note that after the testing terminates, you can find the folder `out_work_1`, which saves the buggy schedule that could deterministically reproduce the bugs. 
+
   - Use the command like the following to reproduce the double free:
     ```sh
     $ROOT_DIR/tool/DBDS/run_PDS.py -r out_df_1/Errors/000001_0000003_double-free ./df
@@ -224,7 +225,7 @@ Total Error Interleavings: 8
 Total Timeouts Interleavings: 0
 ```
 
-***The number of schedules that were explored up to and including the detection of a bug for the first time is 19. The total number of schedules explored by a PERIOD are 6, and the number of explored schedules that exhibited the bug are 8. This can easily allow you to repeat the data in Tables 1 and 2 of our paper.***
+The number of schedules that were explored up to and including the detection of a bug for the first time is 19. The total number of schedules explored by a PERIOD are 6, and the number of explored schedules that exhibited the bug are 8. This can easily allow you to repeat the data in Tables 1 and 2 of our paper.***
 
 4. Deterministically Reproduce the Bug
 ```sh
