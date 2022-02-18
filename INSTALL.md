@@ -26,7 +26,7 @@ If you really want to install the tool from source code on your host system, ple
 - **Operating System:** >= Ubuntu 18.04 LTS (Requires kernel version >= 4.x due to the scheduling policy)
 - **install Package:**: Our artifact depends on some packages, please run the following command to install required packages.
   - ```sh
-    sudo apt-get install -y wget git build-essential python3 python python-pip python3-pip tmux cmake libtool libtool-bin automake autoconf autotools-dev m4 autopoint libboost-dev help2man gnulib bison flex texinfo zlib1g-dev libexpat1-dev libfreetype6 libfreetype6-dev libbz2-dev liblzo2-dev libtinfo-dev libssl-dev pkg-config libswscale-dev libarchive-dev liblzma-dev liblz4-dev doxygen vim intltool gcc-multilib sudo --fix-missing```
+    sudo apt-get install -y wget git build-essential python3 python python-pip python3-pip tmux cmake libtool libtool-bin automake autoconf autotools-dev m4 autopoint libboost-dev help2man gnulib bison flex texinfo zlib1g-dev libexpat1-dev libfreetype6 libfreetype6-dev libbz2-dev liblzo2-dev libtinfo-dev libssl-dev pkg-config libswscale-dev libarchive-dev liblzma-dev liblz4-dev doxygen libncurses5 vim intltool gcc-multilib sudo --fix-missing```
   - ```sh
     pip install numpy && pip3 install numpy && pip3 install sysv_ipc
     ```
