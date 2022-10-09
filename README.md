@@ -52,7 +52,7 @@ The repository mainly contains three folders: [*tool*](#tool), [*test*](#test) a
 
 ## Tool
 
-The easiest way to use PERIOD is to use Docker. We strongly recommend installing and running our tool based on Docker. If you really want to install the tool in your host system, please see [INSTALL.md](tool/INSTALL.md) for more detail.
+The easiest way to use PERIOD is to use Docker. We strongly recommend installing and running our tool based on Docker. If you really want to install the tool in your host system, please see [INSTALL.md](INSTALL.md) for more detail.
 
 
 ### Requirements
